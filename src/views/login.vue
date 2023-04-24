@@ -25,7 +25,7 @@
         <div class="login-btn">
           <el-button type="primary" @click="submitForm(login)">登录</el-button>
         </div>
-        <p class="login-tips">Tips : 用户名和密码随便填。</p>
+        <p class="login-tips">Tips : admin/123456。</p>
       </el-form>
     </div>
   </div>
@@ -39,7 +39,7 @@ import {useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
 import type {FormInstance, FormRules} from 'element-plus';
 import {Lock, User} from '@element-plus/icons-vue';
-import service from "../utils/request";
+import {loginData, menuData} from '../api/index';
 
 interface LoginInfo {
   username: string;
@@ -49,7 +49,7 @@ interface LoginInfo {
 const router = useRouter();
 const param = reactive<LoginInfo>({
   username: 'admin',
-  password: '123123'
+  password: '123456'
 });
 
 const rules: FormRules = {
@@ -69,20 +69,27 @@ const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid: boolean) => {
     if (valid) {
-      service.post('/api/base/user/login', {
-        'username': 'username',
-        'password': 'this is password'
+      loginData({
+        'username': param.username,
+        'password': param.password
       }).then(res => {
-        console.log(res)
-      }, err => {
-        console.log(err)
+        if (res.data.code == '200') {
+          ElMessage.success('登录成功');
+          localStorage.setItem('ms_username', param.username);
+          menuData().then(res => {
+            if (res.data.code == '200') {
+              console.log(res.data.data)
+              permiss.handleSet(res.data.data)
+            }
+          })
+          const keys = permiss.defaultList[param.username == 'admin' ? 'admin' : 'user'];
+          permiss.handleSet(keys);
+          localStorage.setItem('ms_keys', JSON.stringify(keys));
+          router.push('/');
+        } else {
+          ElMessage.error('请检查用户名密码是否匹配');
+        }
       })
-      ElMessage.success('登录成功');
-      localStorage.setItem('ms_username', param.username);
-      const keys = permiss.defaultList[param.username == 'admin' ? 'admin' : 'user'];
-      permiss.handleSet(keys);
-      localStorage.setItem('ms_keys', JSON.stringify(keys));
-      router.push('/');
     } else {
       ElMessage.error('登录成功');
       return false;

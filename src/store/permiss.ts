@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 interface ObjectList {
 	[key: string]: string[];
 }
-
+// 菜单权限列表
 export const usePermissStore = defineStore('permiss', {
 	state: () => {
 		const keys = localStorage.getItem('ms_keys');
