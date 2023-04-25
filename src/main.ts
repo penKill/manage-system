@@ -8,6 +8,7 @@ import 'element-plus/dist/index.css';
 import './assets/css/icon.css';
 
 const app = createApp(App);
+// 挂在app数据
 app.use(createPinia());
 app.use(router);
 
