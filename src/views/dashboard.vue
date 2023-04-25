@@ -85,7 +85,7 @@
             </div>
           </template>
 
-          <el-table :show-header="false" :data="todoList" style="width: 100%">
+          <el-table :show-header="false" :data="todoListData" style="width: 100%">
             <el-table-column width="40">
               <template #default="scope">
                 <el-checkbox v-model="scope.row.status"></el-checkbox>
@@ -126,29 +126,27 @@
 import Schart from 'vue-schart';
 import {onMounted, reactive} from 'vue';
 import imgurl from '../assets/img/img.jpg';
-import {dashBordLastLoginInfo} from '../store/dashboard'
+import {dashBordLastLoginInfo,dashBordTodoListInfo} from '../store/dashboard'
 import WangEditor from "wangeditor";
 
 const dashBordLastLogin = dashBordLastLoginInfo();
+
+const todoListData = dashBordTodoListInfo();
 
 const name = localStorage.getItem('ms_username');
 const role: string = name === 'admin' ? '超级管理员' : '普通用户';
 import {fetchLastLoginInfo} from '../api/dashboard'
 
 onMounted(() => {
+  // 加载上次登录时间 和地点
   fetchLastLoginInfo().then(res => {
     if (res.data.code == '200') {
-      // dashBordLastLogin.setLastLoginTime(res.data.data.last_time);
-      // dashBordLastLogin.setLastLoginPlace(res.data.data.last_place);
       dashBordLastLogin.setLastLoginInfo({
         lastLoginTime: res.data.data.last_time,
         lastLoginPlace: res.data.data.last_place
       })
     }
-
-    // dashBordLastLogin.setLastLoginInfo(res.data.data)
   })
-
 
 
 });
@@ -219,6 +217,10 @@ const todoList = reactive([
   },
   {
     title: '今天要写100行代码加几个bug吧',
+    status: true
+  },
+  {
+    title: '2222',
     status: true
   }
 ]);

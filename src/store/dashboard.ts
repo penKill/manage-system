@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia';
 
+// 上次登录地点和时间实体类
 interface LastLoginInfo {
     // 上次登录时间
     lastLoginTime: string;
@@ -7,14 +8,20 @@ interface LastLoginInfo {
     lastLoginPlace: string;
 }
 
-const defaultValue = <LastLoginInfo>{
+// 代办事项实体类
+interface TodoListInfo {
+    title: string;
+    status: boolean;
+}
+
+const defaultDashBordLastLoginInfo = <LastLoginInfo>{
     lastLoginTime: '2023-09-02',
     lastLoginPlace: 'sz'
 }
-export const dashBordLastLoginInfo = defineStore('lastlogininfo', {
+export const dashBordLastLoginInfo = defineStore('DashBordLastLoginInfo', {
     state: () => {
         return {
-            item: {...defaultValue}
+            item: {...defaultDashBordLastLoginInfo}
         };
     },
     getters: {
@@ -29,12 +36,37 @@ export const dashBordLastLoginInfo = defineStore('lastlogininfo', {
     actions: {
         setLastLoginInfo(loginInfo: LastLoginInfo) {
             this.item = loginInfo
-        },
-        setLastLoginTime(lastLoginTime: string) {
-            this.item.lastLoginTime = lastLoginTime;
-        },
-        setLastLoginPlace(lastLoginPlace: string) {
-            this.item.lastLoginPlace = lastLoginPlace;
         }
+
+    }
+});
+const defaultDashBordTodoListInfo = <TodoListInfo[]>[{
+    title: '2023-09-02',
+    status: false
+}, {
+    title: '2023-09-02',
+    status: true
+}]
+export const dashBordTodoListInfo = defineStore('DashBordTodoListInfo', {
+    state: () => {
+        return {
+            item: <TodoListInfo>[...defaultDashBordTodoListInfo];
+    },
+    getters: {
+        title: state => {
+            return state.item.title;
+        },
+        status: state => {
+            return state.item.status;
+        },
+        item: state => {
+            return state.item;
+        },
+    },
+
+    actions: {
+        setLastLoginInfo(todoList: TodoListInfo) {
+            this.item = todoList
+        },
     }
 });
