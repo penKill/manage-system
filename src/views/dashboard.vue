@@ -85,7 +85,7 @@
             </div>
           </template>
 
-          <el-table :show-header="false" :data="todoListData" style="width: 100%">
+          <el-table :show-header="false" :data="todoList" style="width: 100%">
             <el-table-column width="40">
               <template #default="scope">
                 <el-checkbox v-model="scope.row.status"></el-checkbox>

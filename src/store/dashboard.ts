@@ -50,7 +50,8 @@ const defaultDashBordTodoListInfo = <TodoListInfo[]>[{
 export const dashBordTodoListInfo = defineStore('DashBordTodoListInfo', {
     state: () => {
         return {
-            item: <TodoListInfo>[...defaultDashBordTodoListInfo];
+            list: <TodoListInfo[]>{...defaultDashBordTodoListInfo},
+        }
     },
     getters: {
         title: state => {
@@ -60,13 +61,13 @@ export const dashBordTodoListInfo = defineStore('DashBordTodoListInfo', {
             return state.item.status;
         },
         item: state => {
-            return state.item;
+            return state.list;
         },
     },
 
     actions: {
         setLastLoginInfo(todoList: TodoListInfo) {
-            this.item = todoList
+            this.list = todoList
         },
     }
 });
