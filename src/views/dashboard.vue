@@ -147,7 +147,8 @@ onMounted(() => {
       })
     }
   })
-
+  console.log(todoList)
+  console.log(todoListData.dataList)
 
 });
 
