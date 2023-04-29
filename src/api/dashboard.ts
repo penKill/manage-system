@@ -8,3 +8,11 @@ export const fetchLastLoginInfo = () => {
         method: 'get'
     });
 }
+
+// 获取最近登录信息
+export const fetchUndoList = () => {
+    return request({
+        url: '/api/base/user/undo-list',
+        method: 'get'
+    });
+}

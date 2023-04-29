@@ -51,7 +51,7 @@ const defaultDashBordTodoListInfo = <TodoListInfo[]>[{
 export const dashBordTodoListInfo = defineStore('DashBordTodoListInfo', {
     state: () => {
         return {
-            list: <TodoListInfo[]>{...defaultDashBordTodoListInfo},
+            list: <TodoListInfo[]>[],
         }
     },
     getters: {
