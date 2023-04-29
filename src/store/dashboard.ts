@@ -41,13 +41,6 @@ export const dashBordLastLoginInfo = defineStore('DashBordLastLoginInfo', {
     }
 });
 
-const defaultDashBordTodoListInfo = <TodoListInfo[]>[{
-    title: 'title1',
-    status: false
-}, {
-    title: 'title2',
-    status: true
-}]
 export const dashBordTodoListInfo = defineStore('DashBordTodoListInfo', {
     state: () => {
         return {

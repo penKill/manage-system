@@ -52,6 +52,8 @@ import {onMounted} from 'vue';
 import {useSidebarStore} from '../store/sidebar';
 import {useRouter} from 'vue-router';
 import imgurl from '../assets/img/img.jpg';
+import {handlerLoginOut} from '../api/user'
+import {ElMessage} from "element-plus";
 
 const username: string | null = localStorage.getItem('ms_username');
 const message: number = 2;
@@ -72,8 +74,15 @@ onMounted(() => {
 const router = useRouter();
 const handleCommand = (command: string) => {
   if (command == 'loginout') {
-    localStorage.removeItem('ms_username');
-    router.push('/login');
+    handlerLoginOut().then(res => {
+      if (res.data.code == '200') {
+        localStorage.removeItem('ms_username');
+        router.push('/login');
+      } else {
+        ElMessage.error(res.data.msg);
+      }
+    })
+
   } else if (command == 'user') {
     router.push('/user');
   }

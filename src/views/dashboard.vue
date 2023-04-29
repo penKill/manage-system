@@ -198,36 +198,6 @@ const options2 = {
     }
   ]
 };
-const todoList = reactive([
-  {
-    title: '今天要修复100个bug',
-    status: false
-  },
-  {
-    title: '今天要修复100个bug',
-    status: false
-  },
-  {
-    title: '今天要写100行代码加几个bug吧',
-    status: false
-  },
-  {
-    title: '今天要修复100个bug',
-    status: false
-  },
-  {
-    title: '今天要修复100个bug',
-    status: true
-  },
-  {
-    title: '今天要写100行代码加几个bug吧',
-    status: true
-  },
-  {
-    title: '2222',
-    status: true
-  }
-]);
 </script>
 
 <style scoped>
