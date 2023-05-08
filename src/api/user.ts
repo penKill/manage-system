@@ -12,9 +12,17 @@ export const fetchUserInfo = () => {
 // 处理登录退出情况
 export const handlerLoginOut = () => {
     return request({
-        url: '/api/base/user/user/login-out',
+        url: '/api/base/user/login-out',
         method: 'get'
     });
 }
 
 
+// 登录请求
+export const handlerLogin = (data: any) => {
+    return request({
+        url: '/api/base/user/login',
+        method: 'post',
+        data: data
+    });
+}

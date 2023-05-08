@@ -39,7 +39,8 @@ import {useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
 import type {FormInstance, FormRules} from 'element-plus';
 import {Lock, User} from '@element-plus/icons-vue';
-import {loginData, menuData} from '../api/index';
+import { menuData} from '../api/index';
+import { handlerLogin} from '../api/user';
 
 interface LoginInfo {
   username: string;
@@ -69,7 +70,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid: boolean) => {
     if (valid) {
-      loginData({
+      handlerLogin({
         'username': param.username,
         'password': param.password
       }).then(res => {
@@ -78,13 +79,12 @@ const submitForm = (formEl: FormInstance | undefined) => {
               localStorage.setItem('ms_username', param.username);
               menuData().then(res => {
                 if (res.data.code == '200') {
-                  permiss.handleSet(res.data.data)
+                  let keys = res.data.data
+                  permiss.handleSet(keys)
+                  localStorage.setItem('ms_keys', JSON.stringify(keys));
+                  router.push('/');
                 }
               })
-              const keys = permiss.defaultList[param.username == 'admin' ? 'admin' : 'user'];
-              permiss.handleSet(keys);
-              localStorage.setItem('ms_keys', JSON.stringify(keys));
-              router.push('/');
             } else {
               ElMessage.error('请检查用户名密码是否匹配');
             }

@@ -74,6 +74,7 @@ onMounted(() => {
 const router = useRouter();
 const handleCommand = (command: string) => {
   if (command == 'loginout') {
+    localStorage.clear()
     handlerLoginOut().then(res => {
       if (res.data.code == '200') {
         localStorage.removeItem('ms_username');

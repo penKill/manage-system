@@ -7,14 +7,6 @@ export const fetchData = () => {
     });
 };
 
-// 登录请求
-export const loginData = (data) => {
-    return request({
-        url: '/api/base/user/login',
-        method: 'post',
-        data: data
-    });
-}
 
 // 获取当前用户能执行的菜单
 
