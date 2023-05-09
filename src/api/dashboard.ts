@@ -12,7 +12,7 @@ export const fetchLastLoginInfo = () => {
 // 获取未做代办事项
 export const fetchUndoList = () => {
     return request({
-        url: '/api/base/user/undo-list',
+        url: '/api/base/job/undo-list',
         method: 'get'
     });
 }
