@@ -26,3 +26,11 @@ export const handlerLogin = (data: any) => {
         data: data
     });
 }
+
+// 搜索用户列表数据
+export const handlerUserSearch = (query: string) => {
+    return request({
+        url: '/api/base/user/login' + '?' + query,
+        method: 'get'
+    });
+}

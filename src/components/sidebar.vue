@@ -157,7 +157,8 @@ const items = [
     permiss: '22',
     subs: [
       {
-        index: '/table',
+
+        index: '/userManage',
         title: '用户管理',
         permiss: '23',
       },

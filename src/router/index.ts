@@ -137,6 +137,15 @@ const routes: RouteRecordRaw[] = [
                 },
                 component: () => import(/* webpackChunkName: "import" */ '../views/import.vue'),
             },
+            {
+                path: '/userManage',
+                name: 'userManage',
+                meta: {
+                    title: '用户管理',
+                    permiss: '2',
+                },
+                component: () => import(/* webpackChunkName: "import" */ '../views/userManage.vue'),
+            },
         ],
     },
     {
@@ -163,7 +172,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    document.title = `${to.meta.title} | vue-manage-system`;
+    document.title = `${to.meta.title} | xxx后台管理系统`;
     const role = localStorage.getItem('ms_username');
     console.log(role)
     const permiss = usePermissStore();
