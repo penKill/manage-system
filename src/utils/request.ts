@@ -1,9 +1,10 @@
 import axios, {AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig} from 'axios';
 
-const service:AxiosInstance = axios.create({
+const service: AxiosInstance = axios.create({
     timeout: 5000
 });
 
+service.defaults.headers.post['Content-Type'] = 'application/json';
 service.interceptors.request.use(
     (config: AxiosRequestConfig) => {
         return config;
@@ -27,5 +28,6 @@ service.interceptors.response.use(
         return Promise.reject();
     }
 );
+
 
 export default service;

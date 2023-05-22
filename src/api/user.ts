@@ -30,7 +30,17 @@ export const handlerLogin = (data: any) => {
 // 搜索用户列表数据
 export const handlerUserSearch = (query: string) => {
     return request({
-        url: '/api/base/user/login' + '?' + query,
+        url: '/api/base/user/search' + '?' + query,
         method: 'get'
     });
 }
+
+// 修改用户数据
+export const handlerUserEdit = (data: any) => {
+    return request({
+        url: '/api/base/user/edit',
+        method: 'post',
+        data: data
+    });
+}
+
