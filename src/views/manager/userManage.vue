@@ -115,8 +115,8 @@
 import {ref, reactive} from 'vue';
 import {ElMessage, ElMessageBox} from 'element-plus';
 import {Delete, Edit, Search, Plus} from '@element-plus/icons-vue';
-import {fetchData} from '../api/index';
-import {handlerUserSearch, handlerUserEdit} from '../api/user'
+import {fetchData} from '../../api';
+import {handlerUserSearch, handlerUserEdit} from '../../api/user'
 
 interface TableItem {
   id: number;

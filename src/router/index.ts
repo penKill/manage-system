@@ -99,7 +99,7 @@ const routes: RouteRecordRaw[] = [
                 meta: {
                     title: '个人中心',
                 },
-                component: () => import(/* webpackChunkName: "user" */ '../views/user.vue'),
+                component: () => import(/* webpackChunkName: "user" */ '../views/index/user.vue'),
             },
             {
                 path: '/editor',
@@ -144,7 +144,7 @@ const routes: RouteRecordRaw[] = [
                     title: '用户管理',
                     permiss: '2',
                 },
-                component: () => import(/* webpackChunkName: "import" */ '../views/userManage.vue'),
+                component: () => import(/* webpackChunkName: "import" */ '../views/manager/userManage.vue'),
             },
         ],
     },
