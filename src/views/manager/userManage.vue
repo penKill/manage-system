@@ -9,7 +9,7 @@
         </el-select>
         <el-input v-model="query.username" placeholder="用户名" class="handle-input mr10"></el-input>
         <el-button type="primary" :icon="Search" @click="handleSearch">搜索</el-button>
-        <el-button type="primary" :icon="Plus" @click="handlerAdd">新增用户</el-button>
+        <el-button type="primary" :icon="Plus" @click="handlerAddUser">新增用户</el-button>
       </div>
 
       <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
@@ -20,7 +20,7 @@
             <el-tag
                 :type="scope.row.gander === 0 ? 'success' : 'danger'"
             >
-              {{ scope.row.gander === 0 ? '男' : '女' }}
+              {{ scope.row.gander === 0 ? '女' : '男' }}
             </el-tag>
           </template>
         </el-table-column>
@@ -83,7 +83,7 @@
     </el-dialog>
 
     <!-- 新增弹出框 -->
-    <el-dialog title="新增" v-model=" addVisible " width="30%">
+    <el-dialog title="新增用户" v-model=" addVisible " width="30%">
       <el-form label-width="70px">
         <el-form-item label="用户名">
           <el-input v-model="addForm.username"></el-input>
@@ -103,8 +103,8 @@
       </el-form>
       <template #footer>
 				<span class="dialog-footer">
-					<el-button @click="editVisible = false">取 消</el-button>
-					<el-button type="primary" @click="saveEdit">确 定</el-button>
+					<el-button @click="addVisible = false">取 消</el-button>
+					<el-button type="primary" @click="saveAddUser">确 定</el-button>
 				</span>
       </template>
     </el-dialog>
@@ -128,7 +128,7 @@ interface TableItem {
 }
 
 const query = reactive({
-  gander: '',
+  gander: '1',
   username: '',
   page: 1,
   size: 10
@@ -160,6 +160,25 @@ const handleSearch = () => {
   ElMessage.success(`查询成功`);
 
 };
+
+// 处理用户新增弹窗
+const handlerAddUser = () => {
+  addVisible.value = true
+};
+//处理新增后台用户数据
+const saveAddUser = () => {
+  ElMessageBox.confirm('确定要新增用户吗？', '提示', {
+    type: 'warning'
+  }).then(() => {
+    console.log('点击确认')
+
+  }).catch(() => {
+    console.log('点击其他')
+
+  });
+
+}
+
 // 分页导航
 const handlePageChange = (val: number) => {
   query.page = val;
