@@ -217,13 +217,14 @@ let addForm = reactive({
   gander: '',
 });
 let idx: number = -1;
+//处理编辑的情况
 const handleEdit = (index: number, row: any) => {
   idx = index;
   form.id = row.id
   form.username = row.username;
   form.nickname = row.nickname;
   form.mail = row.mail;
-  form.gander = row.gander;
+  form.gander = row.gander.toString();
   editVisible.value = true;
 };
 // 保存使用调用的方法
