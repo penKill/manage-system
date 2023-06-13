@@ -3,7 +3,7 @@
     <div class="container">
       <!--      表格上方的搜索部分信息-->
       <div class="handle-box">
-        <el-select v-model="query.gander" placeholder="性别" class="handle-select mr10">
+        <el-select v-model="query.gender" placeholder="性别" clearable class="handle-select mr10">
           <el-option key="1" label="男" value="1"></el-option>
           <el-option key="0" label="女" value="0"></el-option>
         </el-select>
@@ -18,9 +18,9 @@
         <el-table-column label="性别" width="75" align="center">
           <template #default="scope">
             <el-tag
-                :type="scope.row.gander === 0 ? 'success' : 'danger'"
+                :type="scope.row.gender === 0 ? 'success' : 'danger'"
             >
-              {{ scope.row.gander === 0 ? '女' : '男' }}
+              {{ scope.row.gender === 0 ? '女' : '男' }}
             </el-tag>
           </template>
         </el-table-column>
@@ -36,7 +36,7 @@
             <el-button text :icon="Edit" @click="handleEdit(scope.$index, scope.row)" v-permiss="15">
               编辑
             </el-button>
-            <el-button text :icon="Delete" class="red" @click="handleDelete(scope.$index)" v-permiss="16">
+            <el-button text :icon="Delete" class="red" @click="handleDelete(scope.$index, scope.row)" v-permiss="16">
               删除
             </el-button>
           </template>
@@ -67,7 +67,7 @@
           <el-input v-model="form.mail"></el-input>
         </el-form-item>
         <el-form-item label="性别">
-          <el-select v-model="form.gander" class="handle-select mr10">
+          <el-select v-model="form.gender" class="handle-select mr10">
             <el-option key="1" label="男" value="1"></el-option>
             <el-option key="0" label="女" value="0"></el-option>
           </el-select>
@@ -95,7 +95,7 @@
           <el-input v-model="addForm.mail"></el-input>
         </el-form-item>
         <el-form-item label="性别">
-          <el-select v-model="addForm.gander" class="handle-select mr10">
+          <el-select v-model="addForm.gender" class="handle-select mr10">
             <el-option key="1" label="男" value="1"></el-option>
             <el-option key="0" label="女" value="0"></el-option>
           </el-select>
@@ -128,7 +128,7 @@ interface TableItem {
 }
 
 const query = reactive({
-  gander: '1',
+  gender: '1',
   username: '',
   page: 1,
   size: 10
@@ -141,11 +141,12 @@ const getData = () => {
   if (query.username) {
     queryStr = queryStr + '&username=' + query.username
   }
-  if (query.gander) {
-    queryStr = queryStr + '&gander=' + query.gander
+  if (query.gender) {
+    queryStr = queryStr + '&gender=' + query.gender
   }
   handlerUserSearch(queryStr).then(res => {
     if (res.data.code == '200') {
+      console.log(res.data.data.items)
       tableData.value = res.data.data.items;
       pageTotal.value = res.data.data.total || 50;
     }
@@ -186,14 +187,14 @@ const handlePageChange = (val: number) => {
 };
 
 // 删除操作
-const handleDelete = (index: number) => {
+const handleDelete = (index: number, data: any) => {
   // 二次确认删除
   ElMessageBox.confirm('确定要删除吗？', '提示', {
     type: 'warning'
-  })
-      .then(() => {
-        ElMessage.success('删除成功');
-        tableData.value.splice(index, 1);
+  }).then(() => {
+        console.log(data.id)
+        // ElMessage.success('删除成功');
+        // tableData.value.splice(index, 1);
       })
       .catch(() => {
       });
@@ -207,14 +208,14 @@ let form = reactive({
   username: '',
   nickname: '',
   mail: '',
-  gander: '',
+  gender: '',
   id: ''
 });
 let addForm = reactive({
   username: '',
   nickname: '',
   mail: '',
-  gander: '',
+  gender: '',
 });
 let idx: number = -1;
 //处理编辑的情况
@@ -224,7 +225,7 @@ const handleEdit = (index: number, row: any) => {
   form.username = row.username;
   form.nickname = row.nickname;
   form.mail = row.mail;
-  form.gander = row.gander.toString();
+  form.gender = row.gender.toString();
   editVisible.value = true;
 };
 // 保存使用调用的方法

@@ -44,3 +44,11 @@ export const handlerUserEdit = (data: any) => {
     });
 }
 
+// 删除用户数据
+export const handlerUserDelete = (id: string) => {
+    return request({
+        url: '/api/base/user/delete' + '?id' + id,
+        method: 'delete'
+    });
+}
+
