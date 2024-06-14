@@ -21,7 +21,7 @@ export default defineConfig({
 		proxy: {
 			"/api": {
 				//本地地址
-				target: "http://127.0.0.1:5000",
+				target: "http://127.0.0.1:8081",
 				//允许跨域
 				changeOrigin: true,
 				// 访问后端地址时候，将api后缀干掉

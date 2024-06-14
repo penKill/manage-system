@@ -12,7 +12,7 @@ export const fetchData = () => {
 
 export const menuData = () => {
     return request({
-        url: '/api/base/menu-defined',
+        url: '/api/menu/list',
         method: 'get'
     });
 }

@@ -39,8 +39,8 @@ import {useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
 import type {FormInstance, FormRules} from 'element-plus';
 import {Lock, User} from '@element-plus/icons-vue';
-import { menuData} from '../api/index';
-import { handlerLogin} from '../api/user';
+import {menuData} from '../api/index';
+import {handlerLogin} from '../api/user';
 
 interface LoginInfo {
   username: string;

@@ -182,7 +182,6 @@ router.beforeEach((to, from, next) => {
         // 如果没有权限，则进入403
         next('/403');
     } else {
-
         next();
     }
 });

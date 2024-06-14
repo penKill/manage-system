@@ -21,7 +21,7 @@ export const handlerLoginOut = () => {
 // 登录请求
 export const handlerLogin = (data: any) => {
     return request({
-        url: '/api/base/user/login',
+        url: '/api/user/login',
         method: 'post',
         data: data
     });
