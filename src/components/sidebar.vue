@@ -153,7 +153,7 @@ const items = [
   {
     icon: 'Memo',
     index: '22',
-    title: '管理中心',
+    title: '管理员中心',
     permiss: '22',
     subs: [
       {

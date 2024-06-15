@@ -30,7 +30,7 @@ export const handlerLogin = (data: any) => {
 // 搜索用户列表数据
 export const handlerUserSearch = (query: string) => {
     return request({
-        url: '/api/base/user/search' + '?' + query,
+        url: '/api/user/search' + '?' + query,
         method: 'get'
     });
 }
