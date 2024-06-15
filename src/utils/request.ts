@@ -5,12 +5,12 @@ const service: AxiosInstance = axios.create({
 });
 
 service.defaults.headers.post['Content-Type'] = 'application/json';
+service.defaults.headers.put['Content-Type'] = 'application/json';
 service.interceptors.request.use(
     (config: AxiosRequestConfig) => {
         return config;
     },
     (error: AxiosError) => {
-        console.log(error);
         return Promise.reject();
     }
 );

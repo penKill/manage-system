@@ -38,8 +38,8 @@ export const handlerUserSearch = (query: string) => {
 // 修改用户数据
 export const handlerUserEdit = (data: any) => {
     return request({
-        url: '/api/base/user/edit',
-        method: 'post',
+        url: '/api/user/edit',
+        method: 'put',
         data: data
     });
 }

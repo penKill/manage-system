@@ -13,9 +13,9 @@
         <el-table-column prop="age" label="年龄" width="55"></el-table-column>
         <el-table-column prop="nickname" label="昵称"></el-table-column>
         <el-table-column prop="mail" label="邮箱"></el-table-column>
+        <el-table-column prop="updateTime" label="更新时间" width="170"></el-table-column>
         <el-table-column prop="userDesc" label="用户描述"></el-table-column>
-
-        <el-table-column label="操作" width="220" align="center">
+        <el-table-column label="操作" align="center">
           <template #default="scope">
             <el-button text :icon="Edit" @click="handleEdit(scope.$index, scope.row)" v-permiss="15">
               编辑
@@ -49,6 +49,9 @@
         </el-form-item>
         <el-form-item label="邮件">
           <el-input v-model="form.mail"></el-input>
+        </el-form-item>
+        <el-form-item label="用户描述">
+          <el-input v-model="form.userDesc" type="textarea" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -174,6 +177,7 @@ let form = reactive({
   username: '',
   nickname: '',
   mail: '',
+  userDesc: '',
   id: ''
 });
 let addForm = reactive({
@@ -188,6 +192,7 @@ const handleEdit = (index: number, row: any) => {
   form.id = row.id
   form.username = row.username;
   form.nickname = row.nickname;
+  form.userDesc = row.userDesc;
   form.mail = row.mail;
   editVisible.value = true;
 };
