@@ -146,6 +146,15 @@ const routes: RouteRecordRaw[] = [
                 },
                 component: () => import(/* webpackChunkName: "import" */ '../views/manager/userManage.vue'),
             },
+            {
+                path: '/accountManage',
+                name: 'accountManage',
+                meta: {
+                    title: '账户管理',
+                    permiss: '2',
+                },
+                component: () => import(/* webpackChunkName: "import" */ '../views/manager/accountManage.vue'),
+            },
         ],
     },
     {

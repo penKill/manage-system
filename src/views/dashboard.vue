@@ -80,8 +80,7 @@
         <el-card shadow="hover" style="height: 403px">
           <template #header>
             <div class="clearfix">
-              <span>待办事项</span>
-              <el-button style="float: right; padding: 3px 0" text>添加</el-button>
+              <span>系统运行日志</span>
             </div>
           </template>
 
@@ -142,8 +141,8 @@ onMounted(() => {
   fetchLastLoginInfo().then(res => {
     if (res.data.code == '200') {
       dashBordLastLogin.setLastLoginInfo({
-        lastLoginTime: res.data.data.last_time,
-        lastLoginPlace: res.data.data.last_place
+        lastLoginTime: res.data.data.lastTime,
+        lastLoginPlace: res.data.data.lastPlace
       })
     }
   });

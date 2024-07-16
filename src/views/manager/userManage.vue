@@ -88,9 +88,7 @@
 <script setup lang="ts" name="basetable">
 import {ref, reactive} from 'vue';
 import {ElMessage, ElMessageBox} from 'element-plus';
-import {Delete, Edit, Search, Plus} from '@element-plus/icons-vue';
-import {fetchData} from '../../api';
-import {handlerUserSearch, handlerUserEdit} from '../../api/user'
+import {handlerUserSearch, handlerUserEdit} from '../../api/manage'
 
 interface TableItem {
   id: number;

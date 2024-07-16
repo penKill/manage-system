@@ -52,3 +52,28 @@ export const handlerUserDelete = (id: string) => {
     });
 }
 
+// 处理搜索机场账户信息
+export const handlerAccountSearch = (query: string) => {
+    return request({
+        url: '/api/account/list' + '?' + query,
+        method: 'get'
+    });
+}
+
+// 处理搜索机场账户信息
+export const handlerAccountUpdate = (data: any) => {
+    return request({
+        url: '/api/account/update',
+        method: 'put',
+        data: data
+    });
+}
+
+// 处理搜索机场账户信息
+export const handlerAccountAdd = (data: any) => {
+    return request({
+        url: '/api/account/add',
+        method: 'post',
+        data: data
+    });
+}

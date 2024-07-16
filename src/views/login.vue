@@ -40,7 +40,7 @@ import {ElMessage} from 'element-plus';
 import type {FormInstance, FormRules} from 'element-plus';
 import {Lock, User} from '@element-plus/icons-vue';
 import {menuData} from '../api/index';
-import {handlerLogin} from '../api/user';
+import {handlerLogin} from '../api/manage';
 
 interface LoginInfo {
   username: string;

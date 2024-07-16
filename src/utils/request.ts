@@ -1,4 +1,6 @@
 import axios, {AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig} from 'axios';
+import {ElMessageBox} from 'element-plus'
+import {h} from 'vue'
 
 const service: AxiosInstance = axios.create({
     timeout: 5000
@@ -18,7 +20,17 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response: AxiosResponse) => {
         if (response.status === 200) {
-            return response;
+            if (response.data.code == '200') {
+                return response;
+            } else {
+                ElMessageBox({
+                    title: 'ERROR',
+                    message: h('p', null, [
+                        h('span', null, '错误消息：'),
+                        h('i', {style: 'color: red'}, response.data.msg),
+                    ]),
+                })
+            }
         } else {
             Promise.reject();
         }
