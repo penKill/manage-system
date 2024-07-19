@@ -151,7 +151,7 @@ const items = [
     permiss: '14',
   },
   {
-    icon: 'Memo',
+    icon: 'User',
     index: '22',
     title: '管理员中心',
     permiss: '22',
@@ -167,17 +167,16 @@ const items = [
         title: '机场账号管理',
         permiss: '25',
       },
-
       {
-        index: '/export',
-        title: '导出管理',
+        index: '/systemConfig',
+        title: '系统设置',
         permiss: '25',
       },
-      {
-        index: '/import',
-        title: '权限列表',
-        permiss: '24',
-      }
+      // {
+      //   index: '/import',
+      //   title: '权限列表',
+      //   permiss: '24',
+      // }
     ],
   },
 ];

@@ -1,5 +1,5 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-import { usePermissStore } from '../store/permiss';
+import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router';
+import {usePermissStore} from '../store/permiss';
 import Home from '../views/home.vue';
 
 const routes: RouteRecordRaw[] = [
@@ -154,6 +154,15 @@ const routes: RouteRecordRaw[] = [
                     permiss: '2',
                 },
                 component: () => import(/* webpackChunkName: "import" */ '../views/manager/accountManage.vue'),
+            },
+            {
+                path: '/systemConfig',
+                name: 'systemConfig',
+                meta: {
+                    title: '系统设置',
+                    permiss: '2',
+                },
+                component: () => import(/* webpackChunkName: "import" */ '../views/manager/systemConfig.vue'),
             },
         ],
     },
