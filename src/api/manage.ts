@@ -45,7 +45,7 @@ export const handlerUserEdit = (data: any) => {
 }
 
 // 删除用户数据
-export const handlerUserDelete = (id: string) => {
+export const handlerUserDelete = (id: number) => {
     return request({
         url: '/api/base/user/delete' + '?id' + id,
         method: 'delete'
@@ -75,5 +75,31 @@ export const handlerAccountAdd = (data: any) => {
         url: '/api/account/add',
         method: 'post',
         data: data
+    });
+}
+
+
+// 搜索配置信息
+export const handlerConfigSearchPage = (query: string) => {
+    return request({
+        url: '/api/config/page?' + query,
+        method: 'get'
+    });
+}
+
+// 搜索配置信息
+export const handlerConfigEdit = (data: any) => {
+    return request({
+        url: '/api/config/edit',
+        method: 'put',
+        data: data
+    });
+}
+
+// 删除配置信息
+export const handlerConfigDelete = (id: number) => {
+    return request({
+        url: '/api/config/delete?id=' + id,
+        method: 'delete',
     });
 }

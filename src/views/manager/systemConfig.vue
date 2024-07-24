@@ -3,21 +3,25 @@
     <div class="container">
       <!--      表格上方的搜索部分信息-->
       <div class="handle-box">
-        <el-input v-model="query.configKey" placeholder="请输入系统配置Key" class="handle-input mr10" />
+        <el-input v-model="query.configKey" placeholder="请输入系统配置Key" class="handle-input mr10"/>
         <el-button type="primary" :icon="Search" @click="handleSearch">搜索</el-button>
 
       </div>
-      <el-table :data="tableData" border class="table" ref="multipleTable"     highlight-current-row header-cell-class-name="table-header">
-        <el-table-column  type="index"  label="序号" width="60" />
+      <el-table :data="tableData" border class="table" ref="multipleTable" highlight-current-row
+                header-cell-class-name="table-header">
+        <el-table-column type="index" label="序号" width="60"/>
         <el-table-column prop="configKey" label="配置key" width="350">
           <template #default="scope">
-            <el-popover effect="light" trigger="hover" placement="top" width="auto">
+            <el-popover effect="light" trigger="hover" placement="top" width="600">
               <template #default>
-                <div>value: {{ scope.row.configValue }}</div>
-                <div>注释信息: {{ scope.row.notes }}</div>
+                <div><p style="color:blue">配置值:</p> {{ scope.row.configValue }}</div>
+                <div><p style="color:blue">注释信息:</p> {{ scope.row.notes }}</div>
               </template>
               <template #reference>
-                <el-tag>{{ scope.row.configKey }}</el-tag>
+                <el-tag :style="scope.row.enable=='ENABLE'?'color:green':'color:red'"> {{
+                    scope.row.configKey
+                  }}
+                </el-tag>
               </template>
             </el-popover>
           </template>
@@ -48,19 +52,34 @@
     </div>
 
     <!-- 编辑弹出框 -->
-    <el-dialog title="编辑" v-model="editVisible" width="30%">
-      <el-form label-width="70px">
-        <el-form-item label="用户名">
-          <el-input v-model="form.username"></el-input>
+    <el-dialog title="编辑" v-model="editVisible" width="50%">
+      <el-form label-width="120px">
+        <el-form-item label="配置key">
+          <el-input v-model="editForm.configKey" disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="昵称">
-          <el-input v-model="form.nickname"></el-input>
+        <el-form-item label="配置value">
+          <el-input
+              v-model="editForm.configValue"
+              :autosize="{ minRows: 4, maxRows: 8 }"
+              type="textarea"
+              placeholder="请输入配置值"
+          />
         </el-form-item>
-        <el-form-item label="邮件">
-          <el-input v-model="form.mail"></el-input>
+        <el-form-item label="注释信息">
+          <el-input
+              v-model="editForm.notes"
+              :autosize="{ minRows: 4, maxRows: 8 }"
+              type="textarea"
+              placeholder="请输入注释信息"
+          />
         </el-form-item>
-        <el-form-item label="用户描述">
-          <el-input v-model="form.userDesc" type="textarea" />
+        <el-form-item label="禁用/启用 ">
+          <el-switch
+              v-model="editForm.enable"
+              style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+              active-value="ENABLE"
+              inactive-value="DISABLE"
+          />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -71,34 +90,13 @@
       </template>
     </el-dialog>
 
-    <!-- 新增弹出框 -->
-    <el-dialog title="新增用户" v-model=" addVisible " width="30%">
-      <el-form label-width="70px">
-        <el-form-item label="用户名">
-          <el-input v-model="addForm.username"></el-input>
-        </el-form-item>
-        <el-form-item label="昵称">
-          <el-input v-model="addForm.nickname"></el-input>
-        </el-form-item>
-        <el-form-item label="邮件">
-          <el-input v-model="addForm.mail"></el-input>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="addVisible = false">取 消</el-button>
-					<el-button type="primary" @click="saveAddUser">确 定</el-button>
-				</span>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts" name="basetable">
 import {ref, reactive} from 'vue';
 import {ElMessage, ElMessageBox} from 'element-plus';
-import {handlerConfigSearchPage} from '../../api/systemConfig'
-
+import {handlerConfigEdit, handlerConfigSearchPage, handlerConfigDelete} from '../../api/manage'
 
 
 interface TableItem {
@@ -108,6 +106,7 @@ interface TableItem {
   createTime: string;
   updateTime: string;
 }
+
 // 查询的参数
 const query = reactive({
   configKey: '',
@@ -132,30 +131,12 @@ const getData = () => {
 getData();
 // 查询操作
 const handleSearch = () => {
-  // query.page = 1;
-  // query.size = 10;
+  query.page = 1;
+  query.size = 10;
   getData();
   ElMessage.success(`查询成功`);
-
 };
 
-// 处理用户新增弹窗
-const handlerAddUser = () => {
-  addVisible.value = true
-};
-//处理新增后台用户数据
-const saveAddUser = () => {
-  ElMessageBox.confirm('确定要新增用户吗？', '提示', {
-    type: 'warning'
-  }).then(() => {
-    console.log('点击确认')
-
-  }).catch(() => {
-    console.log('点击其他')
-
-  });
-
-}
 
 // 分页导航
 const handlePageChange = (val: number) => {
@@ -169,11 +150,9 @@ const handleDelete = (index: number, data: any) => {
   ElMessageBox.confirm('确定要删除吗？', '提示', {
     type: 'warning'
   }).then(() => {
-    console.log(data.id)
-    // ElMessage.success('删除成功');
-    // tableData.value.splice(index, 1);
-  })
-      .catch(() => {
+    handlerConfigDelete(data.id)
+    getData();
+  }).catch(() => {
       });
 };
 
@@ -181,27 +160,23 @@ const handleDelete = (index: number, data: any) => {
 const editVisible = ref(false);
 // 表格新增的弹窗控制
 const addVisible = ref(false);
-let form = reactive({
-  username: '',
-  nickname: '',
-  mail: '',
-  userDesc: '',
+let editForm = reactive({
+  configKey: '',
+  configValue: '',
+  notes: '',
+  enable: 'DISABLE',
   id: ''
 });
-let addForm = reactive({
-  username: '',
-  nickname: '',
-  mail: '',
-});
+
 let idx: number = -1;
 //处理编辑的情况
 const handleEdit = (index: number, row: any) => {
   idx = index;
-  form.id = row.id
-  form.username = row.username;
-  form.nickname = row.nickname;
-  form.userDesc = row.userDesc;
-  form.mail = row.mail;
+  editForm.id = row.id
+  editForm.configKey = row.configKey;
+  editForm.configValue = row.configValue;
+  editForm.notes = row.notes;
+  editForm.enable = row.enable;
   editVisible.value = true;
 };
 // 保存使用调用的方法
@@ -209,19 +184,7 @@ const saveEdit = () => {
   //取消对话框修改
   editVisible.value = false;
   const data = {}
-  handlerUserEdit(JSON.stringify(form)).then(res => {
-    if (res.data.code == '200') {
-      ElMessage.success(`修改第 ${idx + 1} 行成功`);
-      getData();
-    }
-  })
-};
-
-const saveAdd = () => {
-  //取消对话框修改
-  addVisible.value = false;
-  const data = {}
-  handlerUserEdit(JSON.stringify(form)).then(res => {
+  handlerConfigEdit(JSON.stringify(editForm)).then(res => {
     if (res.data.code == '200') {
       ElMessage.success(`修改第 ${idx + 1} 行成功`);
       getData();
