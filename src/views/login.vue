@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <div class="ms-login">
-      <div class="ms-title">后台管理系统</div>
+      <div class="ms-title">{{ loginTitle }}</div>
       <el-form :model="param" :rules="rules" ref="login" label-width="0px" class="ms-content">
         <el-form-item prop="username">
           <el-input v-model="param.username" placeholder="username">
@@ -38,7 +38,6 @@ import {usePermissStore} from '../store/permiss';
 import {useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
 import type {FormInstance, FormRules} from 'element-plus';
-import {Lock, User} from '@element-plus/icons-vue';
 import {menuData} from '../api/index';
 import {handlerLogin} from '../api/manage';
 
@@ -48,6 +47,11 @@ interface LoginInfo {
 }
 
 const router = useRouter();
+let loginTitle = '管理系统';
+if (JSON.parse(<string>localStorage.getItem('systemInfo'))) {
+  loginTitle = JSON.parse(<string>localStorage.getItem('systemInfo')).loginTitle;
+}
+
 const param = reactive<LoginInfo>({
   username: 'admin',
   password: '123456'
@@ -74,20 +78,15 @@ const submitForm = (formEl: FormInstance | undefined) => {
         'username': param.username,
         'password': param.password
       }).then(res => {
-            if (res.data.code == '200') {
-              ElMessage.success('登录成功');
-              localStorage.setItem('ms_username', param.username);
-              menuData().then(res => {
-                if (res.data.code == '200') {
-                  let keys = res.data.data
-                  permiss.handleSet(keys)
-                  localStorage.setItem('ms_keys', JSON.stringify(keys));
-                  router.push('/');
-                }
-              })
-            } else {
-              ElMessage.error('请检查用户名密码是否匹配');
-            }
+            ElMessage.success('登录成功');
+            localStorage.setItem('ms_username', param.username);
+            menuData().then(res => {
+              let keys = res.data.data
+              permiss.handleSet(keys)
+              localStorage.setItem('ms_keys', JSON.stringify(keys));
+              router.push('/');
+            })
+
           },
           err => {
             ElMessage.error('服务器发生错误，请检查错误');

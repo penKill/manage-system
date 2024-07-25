@@ -1,6 +1,7 @@
 import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router';
 import {usePermissStore} from '../store/permiss';
 import Home from '../views/home.vue';
+import {fetchSystemInfo} from "../api/globalSetting";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -190,11 +191,19 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    document.title = `${to.meta.title} | xxx后台管理系统`;
-    const role = localStorage.getItem('ms_username');
-    console.log(role)
+    //获取后端系统设置 存放到浏览器中
+    let title = '管理系统';
+    fetchSystemInfo().then(res => {
+            localStorage.setItem('systemInfo', JSON.stringify(res.data.data));
+            title = res.data.data.pageTitle;
+        }
+    )
+
+    document.title = title;
+    const username = localStorage.getItem('ms_username');
     const permiss = usePermissStore();
-    if (!role && to.path !== '/login') {
+    console.log(username)
+    if (!username && to.path !== '/login') {
         next('/login');
     } else if (to.meta.permiss && !permiss.key.includes(to.meta.permiss)) {
         // 如果没有权限，则进入403

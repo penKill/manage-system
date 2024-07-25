@@ -1,5 +1,6 @@
 import axios, {AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig} from 'axios';
 import {ElMessageBox} from 'element-plus'
+import type {Action} from 'element-plus'
 import {h} from 'vue'
 
 const service: AxiosInstance = axios.create({
@@ -22,6 +23,15 @@ service.interceptors.response.use(
         if (response.status === 200) {
             if (response.data.code == '200') {
                 return response;
+            } else if (response.data.code == '222') {
+                ElMessageBox.alert('您登录超时，需要重新登录！', '登录超时', {
+                    type: "warning",
+                    confirmButtonText: '去登录',
+                    callback: (action: Action) => {
+                        localStorage.clear();
+                        window.location.href = '#/login';
+                    },
+                })
             } else {
                 ElMessageBox({
                     title: 'ERROR',
