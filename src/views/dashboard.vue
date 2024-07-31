@@ -132,7 +132,7 @@ const dashBordLastLogin = dashBordLastLoginInfo();
 
 const todoListData = dashBordTodoListInfo();
 
-const name = localStorage.getItem('ms_username');
+const name = sessionStorage.getItem('ms_username');
 const role: string = name === 'admin' ? '超级管理员' : '普通用户';
 import {fetchLastLoginInfo, fetchUndoList} from '../api/dashboard'
 

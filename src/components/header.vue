@@ -55,7 +55,7 @@ import imgurl from '../assets/img/img.jpg';
 import {handlerLoginOut} from '../api/manage'
 import {ElMessage} from "element-plus";
 
-const username: string | null = localStorage.getItem('ms_username');
+const username: string | null = sessionStorage.getItem('ms_username');
 const message: number = 2;
 
 const sidebar = useSidebarStore();
@@ -74,7 +74,6 @@ onMounted(() => {
 const router = useRouter();
 const handleCommand = (command: string) => {
   if (command == 'loginout') {
-    localStorage.clear()
     handlerLoginOut().then(res => {
       router.push('/login');
       sessionStorage.clear();

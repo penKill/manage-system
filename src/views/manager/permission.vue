@@ -3,7 +3,7 @@
     <div class="plugins-tips">角色信息仅展示最新或创建的5个角色名称</div>
     <div class="mgb20">
       <span class="label">角色：</span>
-      <el-select v-model="roleListData[0].roleName" @change="handleChange">
+      <el-select v-if="roleListData[0]" v-model="roleListData[0].roleName" @change="handleChange">
         <el-option
             v-for="item in roleListData"
             :key="item.roleId"
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts" name="permission">
-import {ref} from 'vue';
+import {ref, onBeforeMount} from 'vue';
 import {ElTree} from 'element-plus';
 import {usePermissStore} from '../../store/permiss';
 import {fetchMenuTree, fetchRoleList, fetchCheckMenuList} from "../../api/manage";
@@ -40,6 +40,7 @@ interface RoleList {
 }
 
 const roleListData = ref<RoleList[]>([]);
+
 
 interface Tree {
   id: string;
@@ -55,14 +56,13 @@ const showMenuTree = () => {
   });
 };
 showMenuTree();
-// 展示角色下拉列表
-const showRoleList = () => {
+
+// 组件加载之前调用
+onBeforeMount(() => {
   fetchRoleList().then(res => {
     roleListData.value = res.data.data;
   });
-};
-showRoleList();
-
+})
 const permiss = usePermissStore();
 
 // 获取当前权限

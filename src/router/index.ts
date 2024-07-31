@@ -130,9 +130,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     //获取后端系统设置 存放到浏览器中
     document.title = JSON.parse(<string>localStorage.getItem('systemInfo')).pageTitle;
-    const username = localStorage.getItem('ms_username');
+    const username = sessionStorage.getItem('ms_username');
     const permiss = usePermissStore();
-    console.log(username)
     if (!username && to.path !== '/login') {
         next('/login');
     } else if (to.meta.permiss && !permiss.key.includes(to.meta.permiss)) {

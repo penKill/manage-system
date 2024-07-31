@@ -38,7 +38,7 @@ import {usePermissStore} from '../store/permiss';
 import {useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
 import type {FormInstance, FormRules} from 'element-plus';
-import {menuData} from '../api/index';
+import {menuCheckData} from '../api';
 import {handlerLogin} from '../api/manage';
 
 interface LoginInfo {
@@ -79,18 +79,19 @@ const submitForm = (formEl: FormInstance | undefined) => {
         'password': param.password
       }).then(res => {
             ElMessage.success('登录成功');
-            localStorage.setItem('ms_username', param.username);
-            menuData().then(res => {
-              let keys = res.data.data
-              permiss.handleSet(keys)
-              localStorage.setItem('ms_keys', JSON.stringify(keys));
+            sessionStorage.setItem('ms_username', param.username);
+            menuCheckData().then(res => {
+              let dataJson = [];
+              res.data.data.forEach(item => {
+                dataJson.push("" + item)
+              })
+              sessionStorage.setItem('ms_keys', JSON.stringify(dataJson));
               router.push('/');
             })
 
           },
           err => {
             ElMessage.error('服务器发生错误，请检查错误');
-            console.log(err)
           })
     } else {
       ElMessage.error('登录成功');

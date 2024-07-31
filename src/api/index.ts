@@ -10,9 +10,9 @@ export const fetchData = () => {
 
 // 获取当前用户能执行的菜单
 
-export const menuData = () => {
+export const menuCheckData = () => {
     return request({
-        url: '/api/menu/list',
+        url: '/api/menu/check',
         method: 'get'
     });
 }
