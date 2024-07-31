@@ -103,3 +103,28 @@ export const handlerConfigDelete = (id: number) => {
         method: 'delete',
     });
 }
+
+// 获取后端菜单树
+export const fetchMenuTree = () => {
+    return request({
+        url: '/api/menu/tree',
+        method: 'get',
+    });
+}
+
+// 获取后端所有角色名称
+export const fetchRoleList = () => {
+    return request({
+        url: '/api/role/role-list',
+        method: 'get',
+    });
+}
+
+// 获取当前用户有那些菜单被被选中
+export const fetchCheckMenuList = () => {
+    return request({
+        url: '/api/menu/check',
+        method: 'get',
+    });
+}
+

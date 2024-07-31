@@ -76,15 +76,9 @@ const handleCommand = (command: string) => {
   if (command == 'loginout') {
     localStorage.clear()
     handlerLoginOut().then(res => {
-      if (res.data.code == '200') {
-        localStorage.removeItem('ms_username');
-        localStorage.removeItem('ms_keys')
-        router.push('/login');
-      } else {
-        ElMessage.error(res.data.msg);
-      }
+      router.push('/login');
+      sessionStorage.clear();
     })
-
   } else if (command == 'user') {
     router.push('/user');
   }

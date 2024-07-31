@@ -82,7 +82,7 @@ const name = localStorage.getItem('ms_username');
 import {dashBordLastLoginInfo} from '../../store/dashboard'
 
 const dashBordLastLogin = dashBordLastLoginInfo();
-import {fetchUserInfo} from '../../api/user'
+import {fetchUserInfo} from '../../api/manage'
 
 const form = reactive({
   old: '',
