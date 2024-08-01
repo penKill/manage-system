@@ -129,13 +129,17 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     //获取后端系统设置 存放到浏览器中
-    document.title = JSON.parse(<string>localStorage.getItem('systemInfo')).pageTitle;
+    let title = '';
+    if (localStorage.getItem('systemInfo')) {
+        title = JSON.parse(<string>localStorage.getItem('systemInfo')).pageTitle;
+    }
+    document.title = title
     const username = sessionStorage.getItem('ms_username');
     const permiss = usePermissStore();
     if (!username && to.path !== '/login') {
         next('/login');
     } else if (to.meta.permiss && !permiss.key.includes(to.meta.permiss)) {
-        // 如果没有权限，则进入403
+        // 如果没有权限，则进入403 权限获取是在登录完成后讲当前用户所有的权限信息写入sessionStorage中
         next('/403');
     } else {
         next();

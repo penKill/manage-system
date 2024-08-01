@@ -38,7 +38,7 @@ import {usePermissStore} from '../store/permiss';
 import {useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
 import type {FormInstance, FormRules} from 'element-plus';
-import {menuCheckData} from '../api';
+import {menuUserData} from '../api';
 import {handlerLogin} from '../api/manage';
 
 interface LoginInfo {
@@ -80,7 +80,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       }).then(res => {
             ElMessage.success('登录成功');
             sessionStorage.setItem('ms_username', param.username);
-            menuCheckData().then(res => {
+            menuUserData().then(res => {
               let dataJson = [];
               res.data.data.forEach(item => {
                 dataJson.push("" + item)

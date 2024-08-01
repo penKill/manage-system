@@ -3,7 +3,7 @@
     <div class="plugins-tips">角色信息仅展示最新或创建的5个角色名称</div>
     <div class="mgb20">
       <span class="label">角色：</span>
-      <el-select v-if="roleListData[0]" v-model="roleListData[0].roleName" @change="handleChange">
+      <el-select v-if="roleNameData" v-model="roleNameData" @change="handleChange">
         <el-option
             v-for="item in roleListData"
             :key="item.roleId"
@@ -28,9 +28,9 @@
 
 <script setup lang="ts" name="permission">
 import {ref, onBeforeMount} from 'vue';
-import {ElTree} from 'element-plus';
+import {ElTree, ElMessage} from 'element-plus';
 import {usePermissStore} from '../../store/permiss';
-import {fetchMenuTree, fetchRoleList, fetchCheckMenuList} from "../../api/manage";
+import {fetchMenuTree, fetchRoleList, fetchCheckMenu, updateRoleMenu} from "../../api/manage";
 
 const role = ref<string>('admin');
 
@@ -40,6 +40,8 @@ interface RoleList {
 }
 
 const roleListData = ref<RoleList[]>([]);
+const roleNameData = ref<Stirng>('');
+const roleIdData = ref<Stirng>('');
 
 
 interface Tree {
@@ -61,30 +63,39 @@ showMenuTree();
 onBeforeMount(() => {
   fetchRoleList().then(res => {
     roleListData.value = res.data.data;
+    roleNameData.value = res.data.data[0].roleName;
+    roleIdData.value = res.data.data[0].roleId;
+    //查询后端当前角色的哪些被选中了
+    fetchCheckMenu(res.data.data[0].roleId).then(res => {
+      checkedKeys.value = res.data.data;
+    })
   });
 })
 const permiss = usePermissStore();
 
+
 // 获取当前权限
 const checkedKeys = ref<string[]>([]);
-const getPremission = () => {
-  // 请求接口返回权限
-  fetchCheckMenuList().then(res => {
-    checkedKeys.value = res.data.data;
-  })
-};
-getPremission();
-
 // 保存权限
 const tree = ref<InstanceType<typeof ElTree>>();
 const onSubmit = () => {
-  // 获取选中的权限
-  console.log(tree.value!.getCheckedKeys(false));
+  let dataJson = {
+    "roleId": roleIdData.value,
+    "menuIdList": tree.value!.getCheckedKeys(false)
+  }
+  updateRoleMenu(JSON.stringify(dataJson)).then(res => {
+    if (res.data.code == '200') {
+      ElMessage.success(`保存成功`);
+      getData();
+    }
+  });
 };
-
+// 下拉选中切换的时候
 const handleChange = (val: string[]) => {
-  // tree.value!.setCheckedKeys(permiss.defaultList[role.value]);
-  console.log('待补充相关事件处理信息')
+  fetchCheckMenu(val).then(res => {
+    tree.value!.setCheckedKeys(res.data.data);
+    roleIdData.value = val
+  })
 };
 </script>
 

@@ -121,10 +121,19 @@ export const fetchRoleList = () => {
 }
 
 // 获取当前用户有那些菜单被被选中
-export const fetchCheckMenuList = () => {
+export const fetchCheckMenu = (roleId: string) => {
     return request({
-        url: '/api/menu/check',
+        url: '/api/menu/check?roleId=' + roleId,
         method: 'get',
+    });
+}
+
+// 保存被选中的角色对应的菜单权限
+export const updateRoleMenu = (data: any) => {
+    return request({
+        url: '/api/menu/role-menu-update',
+        method: 'put',
+        data: data
     });
 }
 
