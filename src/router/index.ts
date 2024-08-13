@@ -102,6 +102,15 @@ const routes: RouteRecordRaw[] = [
                 },
                 component: () => import(/* webpackChunkName: "import" */ '../views/manager/systemConfig.vue'),
             },
+            {
+                path: '/introduce',
+                name: 'introduce',
+                meta: {
+                    title: '套餐详情',
+                    permiss: '2',
+                },
+                component: () => import(/* webpackChunkName: "import" */ '../views/order/introduce.vue'),
+            }
         ],
     },
     {

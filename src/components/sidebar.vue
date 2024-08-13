@@ -98,6 +98,19 @@ const items = [
     ],
   },
   {
+    icon: 'Grid',
+    index: '4',
+    title: '订单中心',
+    permiss: '4',
+    subs: [
+      {
+        index: '/introduce',
+        title: '套餐详情',
+        permiss: '5',
+      },
+    ],
+  },
+  {
     icon: 'PieChart',
     index: '/charts',
     title: 'schart图表',
