@@ -110,6 +110,24 @@ const routes: RouteRecordRaw[] = [
                     permiss: '2',
                 },
                 component: () => import(/* webpackChunkName: "import" */ '../views/order/introduce.vue'),
+            },
+            {
+                path: '/orderList',
+                name: 'orderList',
+                meta: {
+                    title: '订单列表',
+                    permiss: '2',
+                },
+                component: () => import(/* webpackChunkName: "import" */ '../views/order/orderList.vue'),
+            },
+            {
+                path: '/fileManage',
+                name: 'fileManage',
+                meta: {
+                    title: '文件管理',
+                    permiss: '2',
+                },
+                component: () => import(/* webpackChunkName: "import" */ '../views/other/fileManage.vue'),
             }
         ],
     },

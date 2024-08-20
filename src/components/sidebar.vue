@@ -107,7 +107,24 @@ const items = [
         index: '/introduce',
         title: '套餐详情',
         permiss: '5',
+      }, {
+        index: '/orderList',
+        title: '订单列表',
+        permiss: '6',
       },
+    ],
+  },
+  {
+    icon: 'Grid',
+    index: '5',
+    title: '其他管理',
+    permiss: '4',
+    subs: [
+      {
+        index: '/fileManage',
+        title: '文件管理',
+        permiss: '5',
+      }
     ],
   },
   {
