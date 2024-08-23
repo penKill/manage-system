@@ -8,6 +8,8 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
+    ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
+    ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCascader: typeof import('element-plus/es')['ElCascader']
@@ -36,6 +38,7 @@ declare module '@vue/runtime-core' {
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElProgress: typeof import('element-plus/es')['ElProgress']
     ElRadio: typeof import('element-plus/es')['ElRadio']
+    ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSelect: typeof import('element-plus/es')['ElSelect']

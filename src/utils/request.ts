@@ -9,6 +9,7 @@ const service: AxiosInstance = axios.create({
 
 service.defaults.headers.post['Content-Type'] = 'application/json';
 service.defaults.headers.put['Content-Type'] = 'application/json';
+service.defaults.headers.delete['Content-Type'] = 'application/json';
 service.interceptors.request.use(
     (config: AxiosRequestConfig) => {
         return config;
@@ -21,25 +22,30 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response: AxiosResponse) => {
         if (response.status === 200) {
-            if (response.data.code == '200') {
-                return response;
-            } else if (response.data.code == '222') {
-                ElMessageBox.alert('您登录超时，需要重新登录！', '登录超时', {
-                    type: "warning",
-                    confirmButtonText: '去登录',
-                    callback: (action: Action) => {
-                        localStorage.clear();
-                        window.location.href = '#/login';
-                    },
-                })
+            //返回格式是json类型的数据做拦截 其他类型的流数据直接放行
+            if (response.headers['content-type'] && response.headers['content-type'] == 'application/json' && response.data.code) {
+                if (response.data.code == '200') {
+                    return response;
+                } else if (response.data.code == '222') {
+                    ElMessageBox.alert('您登录超时，需要重新登录！', '登录超时', {
+                        type: "warning",
+                        confirmButtonText: '去登录',
+                        callback: (action: Action) => {
+                            localStorage.clear();
+                            window.location.href = '#/login';
+                        },
+                    })
+                } else {
+                    ElMessageBox({
+                        title: 'ERROR',
+                        message: h('p', null, [
+                            h('span', null, '错误消息：'),
+                            h('i', {style: 'color: red'}, response.data.msg),
+                        ]),
+                    })
+                }
             } else {
-                ElMessageBox({
-                    title: 'ERROR',
-                    message: h('p', null, [
-                        h('span', null, '错误消息：'),
-                        h('i', {style: 'color: red'}, response.data.msg),
-                    ]),
-                })
+                return response;
             }
         } else {
             Promise.reject();
