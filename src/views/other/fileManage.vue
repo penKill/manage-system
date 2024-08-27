@@ -2,12 +2,12 @@
   <div style="margin-bottom: 10px;margin-top: 10px">
     <el-button type="primary" @click="handlerCreateFolderClick">创建文件夹</el-button>
     <el-button type="primary" @click="handlerDeleteFolder">删除</el-button>
-    <el-button type="primary" @click="uploadFileVisible=true">上传文件</el-button>
+    <el-button type="primary" @click="handlerUploadFileClick">上传文件</el-button>
     <el-button type="primary" @click="downloadFileHandler">下载文件</el-button>
   </div>
   <div>
 
-    <el-breadcrumb :separator-icon="ArrowRight" :data="pathRoute">
+    <el-breadcrumb class="el-breadcrumb-item" :separator-icon="ArrowRight" :data="pathRoute">
       <el-breadcrumb-item @click="backRoot()">根目录</el-breadcrumb-item>
       <el-breadcrumb-item v-for="item in pathRoute" @click="goBack(item)">{{ item.name }}</el-breadcrumb-item>
     </el-breadcrumb>
@@ -203,11 +203,24 @@ const handlerCreateFolderClick = () => {
     if (selectionRows.length == 1 && !selectionRows[0].isFile) {
       pid.value = selectionRows[0].id;
     } else {
-      ElMessage('创建文件夹必须选中一个父文件夹哦');
+      ElMessage('创建文件夹必须选中一个父文件夹哦！');
       return;
     }
   }
   creatFolderVisible.value = true;
+}
+
+const handlerUploadFileClick = () => {
+  let selectionRows = multipleTableRef.value!.getSelectionRows();
+  if (selectionRows.length > 0) {
+    if (selectionRows.length == 1 && !selectionRows[0].isFile) {
+      pid.value = selectionRows[0].id;
+    } else {
+      ElMessage('上传文件必须选中一个文件夹哦！');
+      return;
+    }
+  }
+  uploadFileVisible.value = true;
 }
 //创建文件夹
 const handlerCreateFolder = () => {
@@ -343,31 +356,35 @@ const downloadFileHandler = () => {
         type: 'warning',
       }
   )
-  // .then(() => {
-  //       console.log('即将进行下载');
-  //       downloadFileAction(JSON.stringify(data)).then(res => {
-  //         if (res && res.status == '200' && res.data) {
-  //           const {data, headers} = res
-  //           let fileName;
-  //           if (res.headers['content-disposition']) {
-  //             fileName = headers['content-disposition'].replace(/\w+;filename=(.*)/, '$1');
-  //           } else {
-  //             fileName = data.fileName;
-  //           }
-  //           const blog = new Blob([data], {type: headers['content-type']});
-  //           const dom = document.createElement('a');
-  //           const downUrl = window.URL.createObjectURL(blog);
-  //           dom.href = downUrl;
-  //           dom.download = decodeURIComponent(fileName);
-  //           dom.style.display = 'none';
-  //           document.body.appendChild(dom);
-  //           window.URL.revokeObjectURL('/api/file/download')
-  //         }
-  //       });
-  //     }
-  // )
-  // .catch(() => {
-  // })
+      .then(() => {
+            downloadFileAction(JSON.stringify(data)).then(res => {
+              const {data, headers} = res
+              let fileName;
+              if (res.headers['content-disposition']) {
+                fileName = decodeURIComponent(headers['content-disposition'].replace(/\w+;filename=(.*)/, '$1'));
+              } else {
+                fileName = data.fileName;
+              }
+              //创建blog对象
+              const blog = new Blob([data], {type: headers['content-type']});
+              //模拟 创建下载元素
+              const downloadElement = document.createElement('a');
+              //创建下载的链接
+              const href = window.URL.createObjectURL(blog);
+              downloadElement.href = href;
+              downloadElement.download = fileName;
+              document.body.appendChild(downloadElement);
+              //模拟下载链接
+              downloadElement.click();
+              //下载后移除动作
+              document.body.removeChild(downloadElement)
+              //释放内存
+              window.URL.revokeObjectURL(href);
+            });
+          }
+      )
+      .catch(() => {
+      })
 
 }
 
@@ -377,5 +394,9 @@ const downloadFileHandler = () => {
 <style scoped>
 .upload-class {
   width: 360px;
+}
+
+.el-breadcrumb-item {
+  color: blue;
 }
 </style>

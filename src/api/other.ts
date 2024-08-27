@@ -53,10 +53,10 @@ export const directorBreadcrumbAction = (id: string) => {
 
 // 下载文件
 export const downloadFileAction = (data: any) => {
-    // return request({
-    //     url: '/api/file/download',
-    //     method: 'post',
-    //     data:data,
-    //     responseType: 'blog'
-    // })
+    return request({
+        url: '/api/file/download',
+        method: 'post',
+        data: data,
+        responseType: 'blob'
+    })
 }
