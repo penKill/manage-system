@@ -115,7 +115,7 @@ const items = [
     ],
   },
   {
-    icon: 'Grid',
+    icon: 'Postcard',
     index: '5',
     title: '其他管理',
     permiss: '4',
@@ -124,6 +124,11 @@ const items = [
         index: '/fileManage',
         title: '文件管理',
         permiss: '5',
+      },
+      {
+        index: '/paymentCode',
+        title: '收款码管理',
+        permiss: '6',
       }
     ],
   },

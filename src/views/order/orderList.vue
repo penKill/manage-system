@@ -13,8 +13,8 @@
       </el-select>
       <el-button @click="getData">查询</el-button>
     </div>
-    <div>
-      <el-button @click="handlerSendEmail">发送邮件</el-button>
+    <div style="margin-top: 20px; ">
+      <el-button private @click="handlerSendEmail">发送邮件</el-button>
       <el-button @click="handlerSettlementOrder">结算</el-button>
     </div>
   </div>
@@ -31,8 +31,8 @@
       <el-table-column property="mealIdValue" label="套餐名称" width="120"/>
       <el-table-column property="price" label="价格" width="120"/>
       <el-table-column property="status" label="状态" width="80" :formatter="formatterStatus"/>
-      <el-table-column property="startTime" label="开始时间"/>
-      <el-table-column property="endTime" label="结束时间"/>
+      <el-table-column property="startTime" label="套餐开始时间"/>
+      <el-table-column property="endTime" label="套餐结束时间"/>
       <el-table-column property="email" label="邮箱"/>
       <el-table-column property="notes" label="备注信息"/>
     </el-table>
@@ -85,9 +85,12 @@ const getData = () => {
   if (query.status) {
     queryStr = queryStr + '$status' + query.status;
   }
+  console.log(queryStr)
   fetchOrderList(queryStr).then(res => {
-    tableData.value = res.data.data.records;
-    pageTotal.value = res.data.data.total || 50;
+    if (res.data.code == '200') {
+      tableData.value = res.data.data.records;
+      pageTotal.value = res.data.data.total || 50;
+    }
   })
 }
 // console.log('获取数据')
@@ -95,15 +98,21 @@ getData();
 
 // 分页导航
 const handlePageChange = (val: number) => {
-  query.page = val;
+  query.page = val | 0;
   getData();
 };
 //格式化状态
 const formatterStatus = (row: OrderList, column: TableColumnCtx<OrderList>) => {
   if (row.status === 'TO_SEND') {
     return '发送中';
+  } else if (row.status === 'SUCCESS_SETTLEMENT') {
+    return '结算完成';
+  } else if (row.status === 'FAIL_SEND') {
+    return '邮件发送失败';
+  } else if (row.status === 'TO_SETTLEMENT') {
+    return '待结算';
   }
-  return '待结算'
+  return row.status;
 }
 //多选
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
@@ -136,7 +145,9 @@ const handlerSettlementOrder = () => {
   });
   if (data.length > 0) {
     handlerSettlementAction(JSON.stringify(data)).then(res => {
-      ElMessage.success('生成待结算单成功！');
+      if (res.data.code == '200') {
+        ElMessage.success('生成待结算单成功！');
+      }
     });
   } else {
     ElMessage.warning('请选择数据');

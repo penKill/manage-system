@@ -60,3 +60,39 @@ export const downloadFileAction = (data: any) => {
         responseType: 'blob'
     })
 }
+
+// 上传收款码
+export const uploadPaymentAction = (formData: any) => {
+    return request.post('/api/payment/upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
+
+
+// 新增收款码信息
+export const addPaymentAction = (data: any) => {
+    return request({
+        url: '/api/payment/add',
+        method: 'post',
+        data
+    });
+}
+
+// 查询收款码信息
+export const paymentListAction = (query: string) => {
+    return request({
+        url: '/api/payment/page-list?' + query,
+        method: 'get',
+    });
+}
+
+// 禁用收款码状态
+export const paymentDisableAction = (data: any) => {
+    return request({
+        url: '/api/payment/disable',
+        method: 'post',
+        data,
+    });
+}

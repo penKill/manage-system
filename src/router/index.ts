@@ -128,6 +128,15 @@ const routes: RouteRecordRaw[] = [
                     permiss: '2',
                 },
                 component: () => import(/* webpackChunkName: "import" */ '../views/other/fileManage.vue'),
+            },
+            {
+                path: '/paymentCode',
+                name: 'paymentCode',
+                meta: {
+                    title: '收款码管理',
+                    permiss: '2',
+                },
+                component: () => import(/* webpackChunkName: "import" */ '../views/other/paymentCode.vue'),
             }
         ],
     },

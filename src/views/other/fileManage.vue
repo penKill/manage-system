@@ -6,7 +6,6 @@
     <el-button type="primary" @click="downloadFileHandler">下载文件</el-button>
   </div>
   <div>
-
     <el-breadcrumb class="el-breadcrumb-item" :separator-icon="ArrowRight" :data="pathRoute">
       <el-breadcrumb-item @click="backRoot()">根目录</el-breadcrumb-item>
       <el-breadcrumb-item v-for="item in pathRoute" @click="goBack(item)">{{ item.name }}</el-breadcrumb-item>

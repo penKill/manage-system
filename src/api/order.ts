@@ -56,8 +56,8 @@ export const sendEmailAction = (data: any) => {
 // 处理生成结算单
 export const handlerSettlementAction = (data: any) => {
     return request({
-        url: '/api/order/settlement',
+        url: '/api/settlement/create',
         method: 'post',
-        data: data
+        data,
     });
 }
