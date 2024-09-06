@@ -75,7 +75,6 @@ const router = useRouter();
 const handleCommand = (command: string) => {
   if (command == 'loginout') {
     handlerLoginOut().then(res => {
-      console.log(111);
       router.push('/login');
       sessionStorage.clear();
     })
