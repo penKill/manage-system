@@ -174,7 +174,7 @@ router.beforeEach((to, from, next) => {
     const permiss = usePermissStore();
     if (!username && to.path !== '/login') {
         next('/login');
-    } else if (to.meta.permiss && !permiss.key.includes(to.meta.permiss)) {
+    } else if (to.path !== '/' && to.meta.permiss && !permiss.key.includes(to.meta.permiss)) {
         // 如果没有权限，则进入403 权限获取是在登录完成后讲当前用户所有的权限信息写入sessionStorage中
         next('/403');
     } else {

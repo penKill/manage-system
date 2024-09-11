@@ -81,8 +81,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
             ElMessage.success('登录成功');
             sessionStorage.setItem('ms_username', param.username);
             menuUserData().then(res => {
-              let dataJson = [];
-              res.data.data.forEach(item => {
+              let dataJson:any = [];
+              res.data.data.forEach((item: number) => {
                 dataJson.push("" + item)
               })
               sessionStorage.setItem('ms_keys', JSON.stringify(dataJson));
