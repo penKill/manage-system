@@ -4,7 +4,6 @@
       <el-col :span="8">
         <el-card shadow="hover" class="mgb20" style="height: 252px">
           <div class="user-info">
-            <el-avatar :size="120" :src="imgurl"/>
             <div class="user-info-cont">
               <div class="user-info-name">{{ name }}</div>
               <div>{{ role }}</div>
@@ -126,7 +125,6 @@ import Schart from 'vue-schart';
 import {onMounted, reactive} from 'vue';
 import imgurl from '../assets/img/img.jpg';
 import {dashBordLastLoginInfo, dashBordTodoListInfo} from '../store/dashboard'
-import WangEditor from "wangeditor";
 
 const dashBordLastLogin = dashBordLastLoginInfo();
 
@@ -264,7 +262,6 @@ const options2 = {
 }
 
 .user-info-cont {
-  padding-left: 50px;
   flex: 1;
   font-size: 14px;
   color: #999;

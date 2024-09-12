@@ -63,41 +63,6 @@ const items = [
     permiss: '1',
   },
   {
-    icon: 'Edit',
-    index: '3',
-    title: '表单相关',
-    permiss: '4',
-    subs: [
-      {
-        index: '/form',
-        title: '基本表单',
-        permiss: '5',
-      },
-      {
-        index: '/upload',
-        title: '文件上传',
-        permiss: '6',
-      },
-      {
-        index: '4',
-        title: '三级菜单',
-        permiss: '7',
-        subs: [
-          {
-            index: '/editor',
-            title: '富文本编辑器',
-            permiss: '8',
-          },
-          {
-            index: '/markdown',
-            title: 'markdown编辑器',
-            permiss: '9',
-          },
-        ],
-      },
-    ],
-  },
-  {
     icon: 'Grid',
     index: '4',
     title: '订单中心',
@@ -131,18 +96,6 @@ const items = [
         permiss: '6',
       }
     ],
-  },
-  {
-    icon: 'PieChart',
-    index: '/charts',
-    title: 'schart图表',
-    permiss: '11',
-  },
-  {
-    icon: 'CoffeeCup',
-    index: '/donate',
-    title: '支持作者',
-    permiss: '14',
   },
   {
     icon: 'User',
