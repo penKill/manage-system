@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
 import {ref, reactive} from 'vue';
+import {User, Lock} from '@element-plus/icons-vue'
 import {useTagsStore} from '../store/tags';
 import {usePermissStore} from '../store/permiss';
 import {useRouter} from 'vue-router';
@@ -109,8 +110,8 @@ tags.clearTags();
   position: relative;
   width: 100%;
   height: 100%;
-  background-image: url(../assets/img/login-bg.jpg);
-  background-size: 100%;
+  /* background-image: url(../assets/img/login-bg.jpg);
+  background-size: 100%; */
 }
 
 .ms-title {
