@@ -9,11 +9,16 @@
           <el-col :span="4">
           </el-col>
           <el-col :span="6">
-            <el-button v-if="buttonDataList" v-for="button in buttonDataList" :key="button.id"
-                       type="info" round :plain="true" :bg="false"
-                       @click="handlerSearchInfo(button.id)">{{
-                button.text
-              }}
+            <el-button
+              v-for="button in buttonDataList"
+              :key="button.id"
+              type="info"
+              round
+              :plain="true"
+              :bg="false"
+              @click="handlerSearchInfo(button.id)"
+            >
+            {{ button.text }}
             </el-button>
           </el-col>
           <el-col :span="4">
@@ -108,7 +113,7 @@
 import {reactive, ref} from 'vue';
 
 import {fetchMealTypeList, fetchMealDetailList, placeOrder, fetchDetailPrice} from '../../api/order'
-import {ElMessage} from "element-plus";
+import { ElMessage } from 'element-plus';
 
 const bugVisible = ref(false);
 

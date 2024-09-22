@@ -7,21 +7,24 @@
         <el-button type="primary" :icon="Search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" :icon="Plus" @click="handlerAddUser">新增用户</el-button>
       </div>
-      <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
+      <el-table :data="tableData" class="table" ref="multipleTable">
         <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
         <el-table-column prop="username" label="用户名" width="120"></el-table-column>
         <el-table-column prop="age" label="年龄" width="55"></el-table-column>
-        <el-table-column prop="nickname" label="昵称"></el-table-column>
-        <el-table-column prop="mail" label="邮箱"></el-table-column>
+        <el-table-column prop="nickname" label="昵称" width="200"></el-table-column>
+        <el-table-column prop="mail" label="邮箱" width="200"></el-table-column>
         <el-table-column prop="updateTime" label="更新时间" width="170"></el-table-column>
-        <el-table-column prop="userDesc" label="用户描述"></el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column prop="userDesc" label="用户描述" width="200"></el-table-column>
+        <el-table-column label="操作" align="center" width="290">
           <template #default="scope">
             <el-button text :icon="Edit" @click="handleEdit(scope.$index, scope.row)" v-permiss="15">
               编辑
             </el-button>
             <el-button text :icon="Delete" class="red" @click="handleDelete(scope.$index, scope.row)" v-permiss="16">
               删除
+            </el-button>
+            <el-button text>
+              禁用
             </el-button>
           </template>
         </el-table-column>
@@ -88,7 +91,8 @@
 <script setup lang="ts" name="basetable">
 import {ref, reactive} from 'vue';
 import {ElMessage, ElMessageBox} from 'element-plus';
-import {handlerUserSearch, handlerUserEdit} from '../../api/manage'
+import {handlerUserSearch, handlerUserEdit} from '../../api/manage';
+import { Search, Plus, Edit, Delete } from '@element-plus/icons-vue';
 
 interface TableItem {
   id: number;
