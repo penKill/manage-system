@@ -68,7 +68,6 @@ const rules: FormRules = {
   ],
   password: [{required: true, message: '请输入密码', trigger: 'blur'}]
 };
-const permiss = usePermissStore();
 const login = ref<FormInstance>();
 
 const submitForm = (formEl: FormInstance | undefined) => {
@@ -76,9 +75,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate((valid: boolean) => {
     if (valid) {
       handlerLogin({
-        'username': param.username,
-        'password': param.password
-      }).then(res => {
+        username: param.username,
+        password: param.password
+      }).then((res) => {
             ElMessage.success('登录成功');
             sessionStorage.setItem('ms_username', param.username);
             menuUserData().then(res => {

@@ -1,40 +1,16 @@
 <template>
   <div>
-    <el-row :gutter="20">
-      <el-col :span="8">
-        <el-card shadow="hover" class="mgb20" style="height: 252px">
-          <div class="user-info">
-            <div class="user-info-cont">
-              <div class="user-info-name">{{ name }}</div>
-              <div>{{ role }}</div>
-            </div>
-          </div>
-          <div class="user-info-list">
-            上次登录时间：
-            <span>{{ dashBordLastLogin.lastLoginTime }}</span>
-          </div>
-          <div class="user-info-list">
-            上次登录地点：
-            <span>{{ dashBordLastLogin.lastLoginPlace }}</span>
-          </div>
-        </el-card>
-        <el-card shadow="hover" style="height: 252px">
+    <el-row :gutter="24">
+      <el-col :span="12">
+        <el-card shadow="hover" class="mgb20">
           <template #header>
             <div class="clearfix">
-              <span>语言详情</span>
+              <span>待结算单金额</span>
             </div>
           </template>
-          Vue
-          <el-progress :percentage="79.4" color="#42b983"></el-progress>
-          TypeScript
-          <el-progress :percentage="14" color="#f1e05a"></el-progress>
-          CSS
-          <el-progress :percentage="5.6"></el-progress>
-          HTML
-          <el-progress :percentage="1" color="#f56c6c"></el-progress>
         </el-card>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="12">
         <el-row :gutter="20" class="mgb20">
           <el-col :span="8">
             <el-card shadow="hover" :body-style="{ padding: '0px' }">
@@ -76,14 +52,14 @@
             </el-card>
           </el-col>
         </el-row>
-        <el-card shadow="hover" style="height: 403px">
+        <el-card shadow="hover">
           <template #header>
             <div class="clearfix">
               <span>系统运行日志</span>
             </div>
           </template>
 
-          <el-table :show-header="false" :data="todoListData.dataList" style="width: 100%">
+          <!-- <el-table :show-header="false" :data="todoListData.dataList" style="width: 100%">
             <el-table-column width="40">
               <template #default="scope">
                 <el-checkbox v-model="scope.row.status"></el-checkbox>
@@ -101,19 +77,29 @@
                 </div>
               </template>
             </el-table-column>
-          </el-table>
+          </el-table> -->
         </el-card>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
+    <el-row :gutter="24">
       <el-col :span="12">
         <el-card shadow="hover">
-          <schart ref="bar" class="schart" canvasId="bar" :options="options"></schart>
+          <template #header>
+            <div class="clearfix">
+              <span>系统运行日志</span>
+            </div>
+          </template>
+          333
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card shadow="hover">
-          <schart ref="line" class="schart" canvasId="line" :options="options2"></schart>
+          <template #header>
+            <div class="clearfix">
+              <span>系统运行日志</span>
+            </div>
+          </template>
+          44444
         </el-card>
       </el-col>
     </el-row>
@@ -121,7 +107,6 @@
 </template>
 
 <script setup lang="ts" name="dashboard">
-import Schart from 'vue-schart';
 import {onMounted, reactive} from 'vue';
 import imgurl from '../assets/img/img.jpg';
 import {dashBordLastLoginInfo, dashBordTodoListInfo} from '../store/dashboard'
@@ -137,7 +122,7 @@ import {fetchLastLoginInfo, fetchUndoList} from '../api/dashboard'
 onMounted(() => {
   // 加载上次登录时间 和地点
   fetchLastLoginInfo().then(res => {
-    if (res.data.code == '200') {
+    if (res?.data?.code == '200') {
       dashBordLastLogin.setLastLoginInfo({
         lastLoginTime: res.data.data.lastTime,
         lastLoginPlace: res.data.data.lastPlace
