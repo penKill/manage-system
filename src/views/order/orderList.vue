@@ -24,7 +24,6 @@
         :data="tableData"
         highlight-current-row
         style="width: 100%"
-        @current-change="handleCurrentChange"
     >
       <el-table-column type="selection" width="55"/>
       <el-table-column type="index" label="序号" width="60"/>
@@ -51,7 +50,7 @@
 
 <script setup lang="ts" name="orderList">
 import {reactive, ref} from 'vue'
-import {ElTable, TableColumnCtx, ElMessage} from 'element-plus'
+import {ElTable, ElMessage} from 'element-plus'
 import {fetchOrderList, sendEmailAction, handlerSettlementAction} from '../../api/order'
 
 interface OrderList {
@@ -102,7 +101,7 @@ const handlePageChange = (val: number) => {
   getData();
 };
 //格式化状态
-const formatterStatus = (row: OrderList, column: TableColumnCtx<OrderList>) => {
+const formatterStatus = (row: OrderList) => {
   if (row.status === 'TO_SEND') {
     return '发送中';
   } else if (row.status === 'SUCCESS_SETTLEMENT') {

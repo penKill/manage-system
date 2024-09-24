@@ -112,8 +112,9 @@
 <script setup lang="ts" name="introduce">
 import {reactive, ref} from 'vue';
 
-import {fetchMealTypeList, fetchMealDetailList, placeOrder, fetchDetailPrice} from '../../api/order'
+import {fetchMealTypeList, fetchMealDetailList, placeOrder, fetchDetailPrice} from '@/api/order'
 import { ElMessage } from 'element-plus';
+import { Search } from '@element-plus/icons-vue';
 
 const bugVisible = ref(false);
 

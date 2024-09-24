@@ -1,4 +1,5 @@
 import {defineConfig} from 'vite';
+import { resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
 import VueSetupExtend from 'vite-plugin-vue-setup-extend';
 import AutoImport from 'unplugin-auto-import/vite';
@@ -17,6 +18,12 @@ export default defineConfig({
             resolvers: [ElementPlusResolver()]
         })
     ],
+    resolve: {
+        alias: {
+            '@': resolve(__dirname, './src'),
+            '*': resolve(''),
+        },
+    },
 	server: {
 		proxy: {
 			"/api": {

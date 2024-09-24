@@ -97,6 +97,7 @@
 import {ref, reactive} from 'vue';
 import {ElMessage, ElMessageBox} from 'element-plus';
 import {handlerConfigEdit, handlerConfigSearchPage, handlerConfigDelete} from '../../api/manage'
+import { Search, Edit, Delete } from '@element-plus/icons-vue';
 
 
 interface TableItem {

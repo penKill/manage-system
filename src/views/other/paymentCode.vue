@@ -105,6 +105,7 @@ import {reactive, ref} from "vue";
 import type {UploadProps, UploadUserFile} from 'element-plus'
 import {ElMessage, ElTable, UploadRequestOptions} from "element-plus";
 import {addPaymentAction, paymentDisableAction, paymentListAction, uploadPaymentAction} from "../../api/other";
+import { Edit } from '@element-plus/icons-vue';
 
 const tableDataList = ref<TableItem[]>([]);
 
@@ -124,9 +125,10 @@ const handlePreview: UploadProps['onPreview'] = (file) => {
 const previewImagePath = ref('');
 
 interface AddForm {
-  type: string,
-  fileId: string,
-  status: string
+  type?: string;
+  fileId?: string;
+  status?: string;
+  imageUrl?: string;
 }
 
 interface TableItem {
@@ -221,7 +223,7 @@ const handlerAddPaymentCode = () => {
   })
 }
 // 格式化类型
-const formatterType = (row: TableItem, column: TableColumnCtx<User>) => {
+const formatterType = (row: TableItem) => {
   if (row.type == 'ALI') {
     return '阿里支付';
   }
@@ -231,7 +233,7 @@ const formatterType = (row: TableItem, column: TableColumnCtx<User>) => {
   return row.type
 }
 // 格式化状态
-const formatterStatus = (row: TableItem, column: TableColumnCtx<User>) => {
+const formatterStatus = (row: TableItem) => {
   if (row.status == 'ENABLE') {
     return '启用';
   }
