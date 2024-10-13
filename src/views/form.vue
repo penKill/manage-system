@@ -139,7 +139,7 @@ const form = reactive({
 const onSubmit = (formEl: FormInstance | undefined) => {
     // 表单校验
     if (!formEl) return;
-    formEl.validate((valid) => {
+    formEl.validate().then((valid) => {
         if (valid) {
             console.log(form);
             ElMessage.success('提交成功！');

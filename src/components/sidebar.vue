@@ -10,7 +10,7 @@
         unique-opened
         router
     >
-      <template v-for="item in items">
+      <template v-for="item in state.menusData">
         <template v-if="item.subs">
           <el-sub-menu :index="item.index" :key="item.index" v-permiss="item.permiss">
             <template #title>
@@ -19,7 +19,7 @@
               </el-icon>
               <span>{{ item.title }}</span>
             </template>
-            <template v-for="subItem in item.subs">
+            <template v-for="(subItem, j) in item.subs">
               <el-sub-menu
                   v-if="subItem.subs"
                   :index="subItem.index"
@@ -31,7 +31,7 @@
                   {{ threeItem.title }}
                 </el-menu-item>
               </el-sub-menu>
-              <el-menu-item v-else :index="subItem.index" v-permiss="item.permiss">
+              <el-menu-item v-else :index="subItem.index" v-permiss="item.permiss" :key="`${subItem.index}-${j}`">
                 {{ subItem.title }}
               </el-menu-item>
             </template>
@@ -51,11 +51,12 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue';
+import {computed, reactive} from 'vue';
 import {useSidebarStore} from '../store/sidebar';
 import {useRoute} from 'vue-router';
 
-const items = [
+const state = reactive<any>({
+  menusData: [
   {
     icon: 'Odometer',
     index: '/dashboard',
@@ -126,7 +127,8 @@ const items = [
       },
     ],
   },
-];
+],
+})
 
 const route = useRoute();
 const onRoutes = computed(() => {

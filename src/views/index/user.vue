@@ -76,13 +76,13 @@
 import {onMounted, reactive, ref} from 'vue';
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
-import avatar from '../../assets/img/img.jpg';
+import avatar from '@/assets/img/img.jpg';
+import {fetchUserInfo} from '@/api/manage';
+import {dashBordLastLoginInfo} from '@/store/dashboard';
 
 const name = sessionStorage.getItem('ms_username');
-import {dashBordLastLoginInfo} from '../../store/dashboard'
 
 const dashBordLastLogin = dashBordLastLoginInfo();
-import {fetchUserInfo} from '../../api/manage'
 
 const form = reactive({
   old: '',
@@ -127,7 +127,7 @@ const saveAvatar = () => {
 };
 
 onMounted(()=>{
-  fetchUserInfo().then(res=>{
+  fetchUserInfo().then((res: any)=>{
     console.log(res.data)
   })
 })

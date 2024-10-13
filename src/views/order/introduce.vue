@@ -10,7 +10,7 @@
           </el-col>
           <el-col :span="6">
             <el-button
-              v-for="button in buttonDataList"
+              v-for="button in mealModel.buttonDataList"
               :key="button.id"
               type="info"
               round
@@ -29,7 +29,7 @@
       </el-header>
       <el-main>
         <el-row :gutter="20">
-          <el-col v-for="card in cardListDetailData" :key="card.id" :span="10">
+          <el-col v-for="card in mealModel.cardListDetailData" :key="card.id" :span="10">
             <el-card style="max-width: 480px">
               <template #header>
                 <div class="card-header">
@@ -43,13 +43,13 @@
                   </span>
                 </div>
               </template>
-              <p v-for="desc in card.describe" style="color: green">
+              <p v-for="desc in card.describe" style="color: green" :key="desc">
                 <el-icon>
                   <CircleCheckFilled/>
                 </el-icon>
                 {{ desc }}
               </p>
-              <p v-for="desc in card.tips" style="color: red">
+              <p v-for="desc in card.tips" style="color: red" :key="desc">
                 <el-icon>
                   <CircleCheckFilled/>
                 </el-icon>
@@ -65,7 +65,7 @@
     </el-container>
   </div>
   <!-- 编辑弹出框 -->
-  <el-dialog title="详情" v-model="bugVisible" width="30%">
+  <el-dialog title="详情" v-model="mealModel.bugVisible" width="30%">
     <el-form label-width="120px">
       <el-form-item label="套餐名称:">
         {{ mealModel.title }}
@@ -100,7 +100,7 @@
     </el-form>
     <template #footer>
 				<span class="dialog-footer">
-					<el-button @click="bugVisible = false">取 消</el-button>
+					<el-button @click="mealModel.bugVisible = false">取 消</el-button>
 					<el-button type="primary" @click="handlerPlaceOrder">确 定</el-button>
 				</span>
     </template>
@@ -116,8 +116,6 @@ import {fetchMealTypeList, fetchMealDetailList, placeOrder, fetchDetailPrice} fr
 import { ElMessage } from 'element-plus';
 import { Search } from '@element-plus/icons-vue';
 
-const bugVisible = ref(false);
-
 //处理切换数据
 const handlerSearchInfo = (val: any) => {
   handlerMealDetailList(val);
@@ -129,7 +127,7 @@ interface ButtonData {
   text: string
 }
 
-let mealModel = reactive({
+let mealModel = reactive<any>({
   id: '',
   unit: '',
   title: '',
@@ -138,7 +136,10 @@ let mealModel = reactive({
   describe: [''],
   tips: [''],
   email: '',
-  notes: ''
+  notes: '',
+  buttonDataList: [],
+  cardListDetailData: [],
+  bugVisible: false,
 });
 
 interface MealInfoDetailData {
@@ -151,23 +152,21 @@ interface MealInfoDetailData {
   tips: string[],
 }
 
-
-const buttonDataList = ref<ButtonData>();
-const cardListDetailData = ref<MealInfoDetailData>();
 //执行参数
 fetchMealTypeList().then(res => {
-  buttonDataList.value = res.data.data;
+  mealModel.buttonDataList = res.data.data;
   // 首次进入时候搜索
   handlerMealDetailList(res.data.data[0].id);
 })
 
 const handlerMealDetailList = (val: string) => {
   fetchMealDetailList(val).then(res => {
-    cardListDetailData.value = res.data.data;
+    mealModel.cardListDetailData = res.data.data;
   })
 }
 // 处理购买逻辑
-const handlerBuy = (detail: MealInfoDetailData) => {
+const handlerBuy = (detail: any) => {
+  console.log('detail-----', detail);
   mealModel.title = detail.title;
   mealModel.id = detail.id;
   mealModel.unit = detail.unit;
@@ -175,7 +174,7 @@ const handlerBuy = (detail: MealInfoDetailData) => {
   mealModel.price = detail.price;
   mealModel.describe = detail.describe;
   mealModel.tips = detail.tips;
-  bugVisible.value = true
+  mealModel.bugVisible = true
 }
 
 const selectOption = ref([])
@@ -216,7 +215,7 @@ const handlerPlaceOrder = () => {
     'notes': mealModel.notes
   }
   placeOrder(JSON.stringify(data)).then(res => {
-    bugVisible.value = false;
+    mealModel.bugVisible = false;
     ElMessage.success(`下单成功`);
   })
 }

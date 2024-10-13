@@ -72,7 +72,7 @@ const login = ref<FormInstance>();
 
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  formEl.validate((valid: boolean) => {
+  formEl.validate().then((valid: boolean) => {
     if (valid) {
       handlerLogin({
         username: param.username,

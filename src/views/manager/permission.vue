@@ -40,8 +40,8 @@ interface RoleList {
 }
 
 const roleListData = ref<RoleList[]>([]);
-const roleNameData = ref<Stirng>('');
-const roleIdData = ref<Stirng>('');
+const roleNameData = ref<String>('');
+const roleIdData = ref<String>('');
 
 
 interface Tree {
@@ -86,12 +86,11 @@ const onSubmit = () => {
   updateRoleMenu(JSON.stringify(dataJson)).then(res => {
     if (res.data.code == '200') {
       ElMessage.success(`保存成功`);
-      getData();
     }
   });
 };
 // 下拉选中切换的时候
-const handleChange = (val: string[]) => {
+const handleChange = (val: string) => {
   fetchCheckMenu(val).then(res => {
     tree.value!.setCheckedKeys(res.data.data);
     roleIdData.value = val
