@@ -9,7 +9,7 @@
         <Fold/>
       </el-icon>
     </div>
-    <div class="logo">wanter练手的项目</div>
+    <div class="logo">airportManage</div>
     <div class="header-right">
       <div class="header-user-con">
         <!-- 消息中心 -->

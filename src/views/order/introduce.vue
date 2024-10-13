@@ -3,34 +3,24 @@
   <div class="common-layout">
     <el-container>
       <el-header>
-        <el-row>
-          <el-col :span="6">
-          </el-col>
-          <el-col :span="4">
-          </el-col>
-          <el-col :span="6">
-            <el-button
-              v-for="button in mealModel.buttonDataList"
-              :key="button.id"
-              type="info"
-              round
-              :plain="true"
-              :bg="false"
-              @click="handlerSearchInfo(button.id)"
-            >
+        <div class="filter-wrap">
+          <ul class="btn-wrap">
+          <li
+            v-for="button in mealModel.buttonDataList"
+            :key="button.id"
+            @click="handlerSearchInfo(button.id)"
+            class="btn-item"
+            :class="{ 'active': mealModel.activeBtn === button.id }"
+          >
             {{ button.text }}
-            </el-button>
-          </el-col>
-          <el-col :span="4">
-          </el-col>
-          <el-col :span="6">
-          </el-col>
-        </el-row>
+          </li>
+        </ul>
+        </div>
       </el-header>
       <el-main>
-        <el-row :gutter="20">
-          <el-col v-for="card in mealModel.cardListDetailData" :key="card.id" :span="10">
-            <el-card style="max-width: 480px">
+        <el-row :gutter="12">
+          <el-col :xs="8" :sm="8" :md="6" :lg="4" :xl="4" v-for="card in mealModel.cardListDetailData" :key="card.id">
+            <el-card>
               <template #header>
                 <div class="card-header">
                   <span>
@@ -118,6 +108,7 @@ import { Search } from '@element-plus/icons-vue';
 
 //处理切换数据
 const handlerSearchInfo = (val: any) => {
+  mealModel.activeBtn = val;
   handlerMealDetailList(val);
 }
 
@@ -140,6 +131,7 @@ let mealModel = reactive<any>({
   buttonDataList: [],
   cardListDetailData: [],
   bugVisible: false,
+  activeBtn: 1,
 });
 
 interface MealInfoDetailData {
@@ -154,6 +146,7 @@ interface MealInfoDetailData {
 
 //执行参数
 fetchMealTypeList().then(res => {
+  console.log('res-----', res);
   mealModel.buttonDataList = res.data.data;
   // 首次进入时候搜索
   handlerMealDetailList(res.data.data[0].id);
@@ -223,25 +216,36 @@ const handlerPlaceOrder = () => {
 </script>
 
 <style scoped>
-
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
+.common-layout {
+  background: #fff;
+  padding: 30px 0;
 }
-
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
+.filter-wrap {
+  display: flex;
+  justify-content: center;
 }
-
-row-bg {
-  margin-top: 40px;
+.btn-wrap {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  width: 180px;
+  padding: 5px 3px;
+  border-radius: 100px;
+  border: 1px solid #000;
 }
-
-.el-card {
-  margin-top: 40px;
-  margin-bottom: 40px;
-  margin-left: 100px;
-
+.btn-item {
+  padding: 3px 14px;
+  cursor: pointer;
+  color: #495057;
+}
+.active {
+  border-radius: 100px;
+  color: #fff;
+  background: #000;
+}
+.el-card:hover {
+  box-shadow: 0 .5rem 2rem #d4dcec;
+  transform: translateY(-2px);
+  opacity: 1;
 }
 </style>
