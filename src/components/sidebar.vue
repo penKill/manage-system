@@ -51,9 +51,10 @@
 </template>
 
 <script setup lang="ts">
-import {computed, reactive} from 'vue';
+import {computed, reactive, onMounted} from 'vue';
 import {useSidebarStore} from '../store/sidebar';
 import {useRoute} from 'vue-router';
+import { fetchMenuTree } from '@/api/manage';
 
 const state = reactive<any>({
   menusData: [
@@ -129,6 +130,13 @@ const state = reactive<any>({
   },
 ],
 })
+
+onMounted(() => {
+  fetchMenuTree().then((res) => {
+    console.log(res);
+    // state.menusData = res.data?.data || []
+  });
+});
 
 const route = useRoute();
 const onRoutes = computed(() => {

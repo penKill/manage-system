@@ -124,14 +124,14 @@ onMounted(() => {
   fetchLastLoginInfo().then(res => {
     if (res?.data?.code == '200') {
       dashBordLastLogin.setLastLoginInfo({
-        lastLoginTime: res.data.data.lastTime,
-        lastLoginPlace: res.data.data.lastPlace
+        lastLoginTime: res.data.data?.lastTime,
+        lastLoginPlace: res.data.data?.lastPlace
       })
     }
   });
   fetchUndoList().then((res: any) => {
     if (res.data.code == '200') {
-      todoListData.setDataList(res.data.data)
+      todoListData.setDataList(res.data?.data)
     }
   })
 

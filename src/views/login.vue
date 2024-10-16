@@ -78,17 +78,19 @@ const submitForm = (formEl: FormInstance | undefined) => {
         username: param.username,
         password: param.password
       }).then((res) => {
+            console.log('res-----', res);
             ElMessage.success('登录成功');
             sessionStorage.setItem('ms_username', param.username);
             menuUserData().then(res => {
+              console.log('res----menu', res);
               let dataJson:any = [];
               res.data.data.forEach((item: number) => {
                 dataJson.push("" + item)
               })
               sessionStorage.setItem('ms_keys', JSON.stringify(dataJson));
               router.push('/');
-            })
-
+            });
+            // router.push('/');
           },
           err => {
             ElMessage.error('服务器发生错误，请检查错误');

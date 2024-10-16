@@ -172,6 +172,7 @@ router.beforeEach((to, from, next) => {
     document.title = title
     const username = sessionStorage.getItem('ms_username');
     const permiss = usePermissStore();
+    console.log('to-------', to);
     if (!username && to.path !== '/login') {
         next('/login');
     } else if (to.path !== '/' && to.meta.permiss && !permiss.key.includes(to.meta.permiss)) {

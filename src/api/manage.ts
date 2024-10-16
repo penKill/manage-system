@@ -107,7 +107,7 @@ export const handlerConfigDelete = (id: number) => {
 // 获取后端菜单树
 export const fetchMenuTree = () => {
     return request({
-        url: '/api/menu/tree',
+        url: '/api/menu/user-tree',
         method: 'get',
     });
 }

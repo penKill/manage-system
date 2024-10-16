@@ -1,4 +1,5 @@
 <template>
+  <div class="order-list">
   <div style="margin-bottom: 20px">
     <div>
       <label>订单状态：</label>
@@ -46,6 +47,7 @@
         @current-change="handlePageChange"
     ></el-pagination>
   </div>
+</div>
 </template>
 
 <script setup lang="ts" name="orderList">
@@ -155,5 +157,8 @@ const handlerSettlementOrder = () => {
 </script>
 
 <style scoped>
-
+.order-list {
+  padding: 30px;
+  background-color: #fff;
+}
 </style>
