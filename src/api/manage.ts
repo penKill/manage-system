@@ -104,6 +104,23 @@ export const handlerConfigDelete = (id: number) => {
     });
 }
 
+
+//获取后端用户所有的菜单树
+export const fetchAllMenuTree = () => {
+    return request({
+        url: '/api/menu/all-tree',
+        method: 'get',
+    });
+}
+
+//获取后端用户所有的菜单树
+export const fetchMenuDetail = (id: number) => {
+    return request({
+        url: '/api/menu/detail?id=' + id,
+        method: 'get'
+    });
+}
+
 // 获取后端菜单树
 export const fetchMenuTree = () => {
     return request({
@@ -137,3 +154,21 @@ export const updateRoleMenu = (data: any) => {
     });
 }
 
+
+// 保存被选中的角色对应的菜单权限
+export const addMenuAction = (data: any) => {
+    return request({
+        url: '/api/menu/add',
+        method: 'post',
+        data: data
+    });
+}
+
+// 删除菜单动作
+export const deleteMenuAction = (data: any) => {
+    return request({
+        url: '/api/menu/delete',
+        method: 'delete',
+        data
+    });
+}

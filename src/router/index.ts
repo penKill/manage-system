@@ -66,6 +66,16 @@ const routes: RouteRecordRaw[] = [
                 component: () => import(/* webpackChunkName: "user" */ '../views/index/user.vue'),
             },
             {
+                path: '/menu',
+                name: 'menu',
+                meta: {
+                    title: '系统菜单',
+                },
+                component: () => import(/* webpackChunkName: "user" */ '../views/index/menu.vue'),
+            }
+
+            ,
+            {
                 path: '/markdown',
                 name: 'markdown',
                 meta: {
