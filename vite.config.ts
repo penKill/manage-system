@@ -35,6 +35,16 @@ export default defineConfig({
 				rewrite: (path => path.replace(/^\/api/, ""))
 			}
 		}
+        // proxy: {
+        //     "/api": {
+        //         //本地地址
+        //         target: "http://localhost:8081/",
+        //         //允许跨域
+        //         changeOrigin: true,
+        //         // 访问后端地址时候，将api后缀干掉
+        //         rewrite: (path => path.replace(/^\/api/, ""))
+        //     }
+        // }
 	}
 	,
     optimizeDeps: {
