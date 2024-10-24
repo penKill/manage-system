@@ -30,7 +30,7 @@
             <el-button text :icon="Edit" @click="handleEdit(scope.$index, scope.row)" v-permiss="15">
               编辑
             </el-button>
-            <el-button text>
+            <el-button text @click="handlerDisable(scope.$index, scope.row)">
               禁用
             </el-button>
           </template>
@@ -137,10 +137,9 @@
 </template>
 
 <script setup lang="ts" name="basetable">
-import {ref, reactive} from 'vue';
+import {reactive, ref} from 'vue';
 import {ElMessage, ElMessageBox} from 'element-plus';
-import {handlerAccountSearch, handlerAccountUpdate, handlerAccountAdd} from '../../api/manage';
-import { Search, Plus, Edit } from '@element-plus/icons-vue';
+import {handlerAccountAdd, handlerAccountDisable, handlerAccountSearch, handlerAccountUpdate} from '@/api/manage';
 
 interface TableItem {
   id: number;
@@ -190,9 +189,9 @@ const handleSearch = () => {
 // 处理用户新增弹窗
 const handlerAddAccount = () => {
   addVisible.value = true
-  addForm.status=''
-  addForm.email=''
-  addForm.password=''
+  addForm.status = ''
+  addForm.email = ''
+  addForm.password = ''
 };
 //处理新增后台用户数据
 const saveAddAccount = () => {
@@ -210,7 +209,7 @@ const saveAddAccount = () => {
       if (res.data.code == '200') {
         ElMessage.success(`新增成功`);
         getData();
-      }else {
+      } else {
         ElMessageBox.confirm(
             'proxy will permanently delete the file. Continue?',
             'Warning',
@@ -286,6 +285,25 @@ const saveEdit = () => {
     }
   })
 };
+// 禁用机场账号
+const handlerDisable = (index: number, row: any) => {
+  // 二次禁用确认
+  ElMessageBox.confirm('确定禁用账号状态么，默认禁用到本月底？', '提示', {
+    type: 'warning'
+  }).then(() => {
+    let dataJson = {}
+    dataJson.id = row.id
+    console.log('1232')
+    handlerAccountDisable(JSON.stringify(dataJson)).then(res => {
+      ElMessage.success(`操作成功`);
+      getData();
+    })
+  })
+      .catch(() => {
+      });
+
+
+}
 
 // 状态枚举
 const statusOptions = [

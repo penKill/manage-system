@@ -13,6 +13,7 @@
         <el-table-column prop="age" label="年龄" width="55"></el-table-column>
         <el-table-column prop="nickname" label="昵称" width="200"></el-table-column>
         <el-table-column prop="mail" label="邮箱" width="200"></el-table-column>
+        <el-table-column prop="status" label="状态" width="80" :formatter="formatUserStatus"></el-table-column>
         <el-table-column prop="updateTime" label="更新时间" width="170"></el-table-column>
         <el-table-column prop="userDesc" label="用户描述" width="200"></el-table-column>
         <el-table-column label="操作" align="center" width="290">
@@ -23,8 +24,10 @@
             <el-button text :icon="Delete" class="red" @click="handleDelete(scope.$index, scope.row)" v-permiss="16">
               删除
             </el-button>
-            <el-button text>
-              禁用
+            <el-button text @click="handleDisable(scope.$index, scope.row)">
+
+              <p v-if="scope.row.status=='ENABLE'">禁用</p>
+              <p v-else>启用</p>
             </el-button>
           </template>
         </el-table-column>
@@ -54,7 +57,7 @@
           <el-input v-model="form.mail"></el-input>
         </el-form-item>
         <el-form-item label="用户描述">
-          <el-input v-model="form.userDesc" type="textarea" />
+          <el-input v-model="form.userDesc" type="textarea"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -91,8 +94,8 @@
 <script setup lang="ts" name="basetable">
 import {ref, reactive} from 'vue';
 import {ElMessage, ElMessageBox} from 'element-plus';
-import {handlerUserSearch, handlerUserEdit} from '../../api/manage';
-import { Search, Plus, Edit, Delete } from '@element-plus/icons-vue';
+import {handlerUserSearch, handlerUserEdit, handlerUserDisable} from '@/api/manage';
+import {Search, Plus, Edit, Delete} from '@element-plus/icons-vue';
 
 interface TableItem {
   id: number;
@@ -171,6 +174,24 @@ const handleDelete = (index: number, data: any) => {
       });
 };
 
+// 删除操作
+const handleDisable = (index: number, data: any) => {
+  // 二次禁用确认
+  ElMessageBox.confirm('确定修改用户状态么，该用户未结算的订单会被一起被重置？', '提示', {
+    type: 'warning'
+  }).then(() => {
+    let dataJson = {}
+    dataJson.id = data.id
+    handlerUserDisable(JSON.stringify(dataJson)).then(res => {
+      ElMessage.success(`禁用成功`);
+      getData();
+    })
+  })
+      .catch(() => {
+      });
+};
+
+
 // 表格编辑时弹窗和保存
 const editVisible = ref(false);
 // 表格新增的弹窗控制
@@ -223,7 +244,22 @@ const saveAdd = () => {
   })
 };
 
-
+// 格式化类型
+const formatUserStatus = (row: TableItem) => {
+  if (row.status == 'ENABLE' || row.status == null) {
+    return '正常';
+  }
+  if (row.status == 'DISABLE') {
+    return '禁用';
+  }
+  if (row.status == 'LOCKED') {
+    return '锁定';
+  }
+  if (row.status == 'DEATH') {
+    return '停用';
+  }
+  return row.status
+}
 </script>
 
 <style scoped>

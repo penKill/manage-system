@@ -4,7 +4,7 @@ import request from '../utils/request';
 // 获取最近登录信息
 export const fetchLastLoginInfo = () => {
     return request({
-        url: '/api/account/last-login',
+        url: '/api/user/last-login',
         method: 'get'
     });
 }

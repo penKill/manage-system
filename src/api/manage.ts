@@ -1,4 +1,4 @@
-import request from '../utils/request';
+import request from '@/utils/request';
 
 
 // 获取当前用户的个人信息
@@ -44,6 +44,16 @@ export const handlerUserEdit = (data: any) => {
     });
 }
 
+// 修改用户数据
+export const handlerUserDisable = (data: any) => {
+    return request({
+        url: '/api/user/disable',
+        method: 'put',
+        data: data
+    });
+}
+
+
 // 删除用户数据
 export const handlerUserDelete = (id: number) => {
     return request({
@@ -74,6 +84,15 @@ export const handlerAccountAdd = (data: any) => {
     return request({
         url: '/api/account/add',
         method: 'post',
+        data: data
+    });
+}
+
+// 禁用机场账户信息
+export const handlerAccountDisable = (data: any) => {
+    return request({
+        url: '/api/account/disable',
+        method: 'put',
         data: data
     });
 }
